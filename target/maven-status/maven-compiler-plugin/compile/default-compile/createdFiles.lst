@@ -1,0 +1,8 @@
+com\jy\common\controller\CommonController.class
+com\jy\JdzdApplication.class
+com\jy\user\service\UserService.class
+com\jy\user\mapper\UserMapper.class
+com\jy\user\service\impl\UserServiceImpl.class
+com\jy\user\entity\User.class
+com\jy\user\controller\UserController.class
+com\jy\common\vo\Result.class
