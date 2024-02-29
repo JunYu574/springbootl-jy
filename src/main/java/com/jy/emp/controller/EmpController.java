@@ -8,10 +8,7 @@ import com.jy.emp.vo.EmpQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -41,7 +38,7 @@ public class EmpController {
         return Result.success(list,count);
     }
 
-    @PostMapping("/add")
+    @PostMapping("")
     @ResponseBody
     public Result<Object> addEmp(Emp emp){
         empService.addEmp(emp);
@@ -53,6 +50,13 @@ public class EmpController {
         List<Dept> deptList = empService.getAllDept();
         model.addAttribute("deptList", deptList);
         return "emp/empAdd";
+    }
+
+    @DeleteMapping("/{ids}")
+    @ResponseBody
+    public Result<Object> deleteEmpByIds(@PathVariable("ids") String ids){
+        empService.deleteEmpByIds(ids);
+        return Result.success("删除员工成功");
     }
 
 }
