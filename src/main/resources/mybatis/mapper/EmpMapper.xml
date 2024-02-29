@@ -22,6 +22,7 @@
     <select id="getEmpList" parameterType="com.jy.emp.vo.EmpQuery" resultMap="empMap">
         select * from emp e left join dept d on e.dept_id = d.dept_id
         <include refid="getEmpListWhere"></include>
+        order by emp_id
         limit #{start},#{limit}
     </select>
     <!--  查询员工数据量  -->
@@ -50,9 +51,13 @@
 
     <insert id="addEmp" parameterType="Emp">
         insert into emp
-        (name,age,sex,sal,birthday,address,dept_id)
+            (name,age,sex,sal,birthday,address,dept_id)
         values
-        (#{name},#{age},#{sex},#{sal},#{birthday},#{address},#{deptId})
+            (#{name},#{age},#{sex},#{sal},#{birthday},#{address},#{deptId})
     </insert>
+
+    <delete id="deleteEmpByIds" parameterType="String">
+        delete from emp where emp_id in (${ids})
+    </delete>
 </mapper>
  
