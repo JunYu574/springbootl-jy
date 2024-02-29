@@ -24,7 +24,7 @@
 </head>
 <body>
 <div class="div-content">
-    <form class="layui-form layui-form-pane" id="form-search">
+    <form class="layui-form layui-form-pane">
     <fieldset class="table-search-fieldset">
         <legend>搜索条件</legend>
         <div class="layui-form-item">
@@ -48,13 +48,9 @@
             </div>
 
             <div class="layui-inline">
-                <button id="btn-search" lay-submit lay-filter="btn-search-filter" type="button" class="layui-btn layui-btn-radius layui-btn-normal">
+                <button lay-submit lay-filter="btn-search-filter" type="button" class="layui-btn layui-btn-radius layui-btn-normal">
                     <i class="layui-icon layui-icon-search"></i>
                     搜索
-                </button>
-                <button id="btn-reset" type="reset" class="layui-btn layui-btn-radius layui-btn-primary">
-                    <i class="layui-icon layui-icon-fonts-clear"></i>
-                    重置
                 </button>
             </div>
 
@@ -89,12 +85,6 @@
 <script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}" charset="utf-8"></script>
 <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
 <script th:inline="javascript">
-
-    function refreshTable() {
-        $("#btn-reset").click();
-        $("#btn-search").click();
-    }
-
     var ctxPath = [[@{/}]];
     layui.use(['laydate','table','form'], function(){
         var laydate = layui.laydate;
@@ -115,35 +105,7 @@
                     // }
                 });
             } else if (obj.event == 'delete'){
-                var checkStatus = table.checkStatus('table-emp'); //idTest 即为基础参数 id 对应的值
-                //如果没有选中任何数据
-                if(checkStatus.data.length == 0){
-                    layer.alert('您没有选中任何数据', {icon: 2,anim: 6,title: '警告'})
-                    return false;
-                }
-                //选中的id
-                var idArr = new Array();
-                $(checkStatus.data).each(function () {
-                    idArr.push(this.empId);
-                });
-                layer.confirm('您确认删除选中记录？', {icon: 3, title:'删除确认'}, function(index){
-
-                    //异步请求删除数据，结果提示，刷新表格
-                    var url = ctxPath + "emp/" + idArr.join(",");
-                    var params = {
-                        _method: "DELETE"
-                    };
-                    $.post(url,params,function (response) {
-                        if(response.code == 0){
-                            layer.msg(response.message, {icon: 1});
-                            refreshTable();
-                        }else {
-                            layer.alert(response.message, {icon: 2, anim: 6});
-                        }
-                    });
-
-                    layer.close(index);
-                });
+                alert('删除');
             }
         });
 
@@ -161,12 +123,11 @@
             ,toolbar: "#table-emp-toolbar"
             ,limits: [5,10,30,50,100]
             ,cols: [[ //表头
-                {type: 'checkbox', width:60}
-                ,{field: 'empId', title: '员工编号', width:120, sort: true, align:'center'}
+                {field: 'empId', title: '员工编号', width:120, sort: true, align:'center'}
                 ,{field: 'name', title: '姓名', width:140, align:'center'}
                 ,{field: 'sex', title: '性别', width:80, sort: true, align:'center', templet:'#convertSex'}
                 ,{field: 'age', title: '年龄', width:80, align:'center'}
-                ,{field: 'sal', title: '工资', width: 120, align:'right'}
+                ,{field: 'sal', title: '工资', width: 140, align:'right'}
                 ,{field: 'dept', title: '部门', width: 140, sort: true, align:'center', templet:'#convertDept'}
                 ,{field: 'birthday', title: '生日', width: 120, sort: true, align:'center'}
                 ,{field: 'address', title: '家庭住址'}

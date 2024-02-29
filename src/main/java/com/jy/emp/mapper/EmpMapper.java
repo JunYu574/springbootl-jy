@@ -12,6 +12,4 @@ public interface EmpMapper {
     Long countEmpList(EmpQuery param);
 
     void addEmp(Emp emp);
-
-    void deleteEmpByIds(String ids);
 }
