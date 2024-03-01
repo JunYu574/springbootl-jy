@@ -14,42 +14,43 @@
     </style>
 </head>
 <body>
-<form class="layui-form" action="">
+<form class="layui-form" action="" th:object="${emp}">
+    <input type="hidden" th:field="*{empId}">
     <div class="layui-form-item">
         <label class="layui-form-label">员工姓名</label>
         <div class="layui-input-block">
-            <input type="text" name="name" required  lay-verify="required" placeholder="请输入员工姓名" autocomplete="off" class="layui-input">
+            <input type="text" th:field="*{name}" required="required"  lay-verify="required" placeholder="请输入员工姓名" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">性别</label>
         <div class="layui-input-block">
-            <input type="radio" name="sex" value="M" title="男">
-            <input type="radio" name="sex" value="F" title="女" checked>
+            <input type="radio" th:field="*{sex}" value="M" title="男">
+            <input type="radio" th:field="*{sex}" value="F" title="女">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">年龄</label>
         <div class="layui-input-block">
-            <input type="text" name="age" required  lay-verify="required|number" placeholder="请输入年龄" autocomplete="off" class="layui-input">
+            <input type="text" th:field="*{age}" required="required"  lay-verify="required|number" placeholder="请输入年龄" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">工资</label>
         <div class="layui-input-block">
-            <input type="text" name="sal" required  lay-verify="required|number" placeholder="请输入工资" autocomplete="off" class="layui-input">
+            <input type="text" th:field="*{sal}" required="required"  lay-verify="required|number" placeholder="请输入工资" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">生日</label>
         <div class="layui-input-block">
-            <input type="text" name="birthday" required  lay-verify="required" placeholder="请选择日期" autocomplete="off" class="layui-input">
+            <input type="text" th:field="*{birthday}" required="required"  lay-verify="required" placeholder="请选择日期" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">部门</label>
         <div class="layui-input-block">
-            <select name="deptId" lay-verify="required">
+            <select th:field="*{deptId}" lay-verify="required">
                 <option value="">请选择</option>
                 <option th:each="dept:${deptList}" th:value="${dept.deptId}"><span th:text="${dept.deptName}"></span></option>
             </select>
@@ -58,7 +59,7 @@
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">家庭地址</label>
         <div class="layui-input-block">
-            <textarea name="address" placeholder="请输入家庭地址" class="layui-textarea"></textarea>
+            <textarea th:field="*{address}" placeholder="请输入家庭地址" class="layui-textarea"></textarea>
         </div>
     </div>
     <div class="layui-form-item">
@@ -86,6 +87,7 @@
             $("#btn-submit").attr("disabled", "disabled").addClass("layui-btn-disabled");
             //异步请求提交数据
             var url = ctxPath + "emp";
+            data.field._method = "PUT";
             $.post(url, data.field, function (response) {
                 if(response.code == 0){
                     //成功提示

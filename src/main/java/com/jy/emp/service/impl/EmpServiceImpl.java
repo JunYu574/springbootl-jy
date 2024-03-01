@@ -49,4 +49,14 @@ public class EmpServiceImpl implements EmpService {
     public void deleteEmpByIds(String ids) {
         empMapper.deleteEmpByIds(ids);
     }
+
+    @Override
+    public Emp getEmpById(Integer id) {
+        return empMapper.getEmpById(id);
+    }
+
+    @Override
+    public void updateEmp(Emp emp) {
+        empMapper.updateEmp(emp);
+    }
 }

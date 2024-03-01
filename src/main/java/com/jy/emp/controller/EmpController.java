@@ -59,4 +59,18 @@ public class EmpController {
         return Result.success("删除员工成功");
     }
 
+    @GetMapping("/{id}")
+    public String getEmpById(@PathVariable("id") Integer id, Model model) {
+        Emp emp = empService.getEmpById(id);
+        model.addAttribute("emp", emp);
+        model.addAttribute("deptList", empService.getAllDept());
+        return "emp/empEdit";
+    }
+
+    @PutMapping("")
+    @ResponseBody
+    public Result<Object> updateEmp(Emp emp){
+        empService.updateEmp(emp);
+        return Result.success("员工信息修改成功");
+    }
 }

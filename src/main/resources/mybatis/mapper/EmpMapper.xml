@@ -59,5 +59,21 @@
     <delete id="deleteEmpByIds" parameterType="String">
         delete from emp where emp_id in (${ids})
     </delete>
+
+    <select id="getEmpById" parameterType="Integer" resultType="Emp">
+        select * from emp where emp_id = #{id}
+    </select>
+
+    <update id="updateEmp" parameterType="Emp">
+        update emp
+        set name = #{name},
+            sex = #{sex},
+            sal = #{sal},
+            age = #{age},
+            birthday = #{birthday},
+            address = #{address},
+            dept_id = #{deptId}
+        where emp_id = #{empId}
+    </update>
 </mapper>
  
