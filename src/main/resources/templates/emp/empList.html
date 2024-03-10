@@ -66,18 +66,18 @@
 </div>
 <script type="text/html" id="convertSex">
     {{#
-    if(d.sex == 'M'){
-    return '男';
-    }else if(d.sex == 'F'){
-    return '女';
-    }else{
-    return '/';
-    }
+        if(d.sex == 'M'){
+            return '男';
+        }else if(d.sex == 'F'){
+            return '女';
+        }else{
+            return '/';
+        }
     }}
 </script>
 <script type="text/html" id="convertDept">
     {{#
-    return d.dept.deptName;
+        return d.dept.deptName;
     }}
 </script>
 <script type="text/html" id="table-emp-toolbar">
@@ -100,133 +100,133 @@
     }
 
     var ctxPath = [[@{/}]];
-        layui.use(['laydate','table','form'], function(){
-            var laydate = layui.laydate;
-            var table = layui.table;
-            var form = layui.form;
+    layui.use(['laydate','table','form'], function(){
+        var laydate = layui.laydate;
+        var table = layui.table;
+        var form = layui.form;
 
-            //表格头部工具栏监听
-            table.on('toolbar(table-emp-filter)', function(obj) {
-                if (obj.event == 'add') {
-                    layer.open({
-                        type: 2,
-                        title: "新增员工",
-                        area: ['50%','80%'],
-                        shade: [0.8, '#393D49'],
-                        content: ctxPath + 'emp/add/ui'
-                    });
-                } else if (obj.event == 'delete'){
-                    var checkStatus = table.checkStatus('table-emp'); //idTest 即为基础参数 id 对应的值
-                    //如果没有选中任何数据
-                    if(checkStatus.data.length == 0){
-                        layer.alert('您没有选中任何数据', {icon: 2,anim: 6,title: '警告'})
-                        return false;
-                    }
-                    //选中的id
-                    var idArr = new Array();
-                    $(checkStatus.data).each(function () {
-                        idArr.push(this.empId);
-                    });
-                    layer.confirm('您确认删除选中记录？', {icon: 3, title:'删除确认'}, function(index){
-
-                        //异步请求删除数据，结果提示，刷新表格
-                        var url = ctxPath + "emp/" + idArr.join(",");
-                        var params = {
-                            _method: "DELETE"
-                        };
-                        $.post(url,params,function (response) {
-                            if(response.code == 0){
-                                layer.msg(response.message, {icon: 1});
-                                refreshTable();
-                            }else {
-                                layer.alert(response.message, {icon: 2, anim: 6});
-                            }
-                        });
-
-                        layer.close(index);
-                    });
-                }
-            });
-
-            $('.date').each(function() {
-                laydate.render({
-                    elem : this,
+        //表格头部工具栏监听
+        table.on('toolbar(table-emp-filter)', function(obj) {
+            if (obj.event == 'add') {
+                layer.open({
+                    type: 2,
+                    title: "新增员工",
+                    area: ['50%','80%'],
+                    shade: [0.8, '#393D49'],
+                    content: ctxPath + 'emp/add/ui'
                 });
-            });
-
-            //员工列表表格
-            table.render({
-                elem: '#table-emp'
-                ,url: ctxPath + 'emp/list' //数据接口
-                ,page: true //开启分页
-                ,toolbar: "#table-emp-toolbar"
-                ,limits: [5,10,30,50,100]
-                ,cols: [[ //表头
-                    {type: 'checkbox', width:60}
-                    ,{field: 'empId', title: '员工编号', width:120, sort: true, align:'center'}
-                    ,{field: 'name', title: '姓名', width:140, align:'center'}
-                    ,{field: 'sex', title: '性别', width:80, sort: true, align:'center', templet:'#convertSex'}
-                    ,{field: 'age', title: '年龄', width:80, align:'center'}
-                    ,{field: 'sal', title: '工资', width: 120, align:'right'}
-                    ,{field: 'dept', title: '部门', width: 140, sort: true, align:'center', templet:'#convertDept'}
-                    ,{field: 'birthday', title: '生日', width: 120, sort: true, align:'center'}
-                    ,{field: 'address', title: '家庭住址'}
-                    ,{title: '操作', width: 150, align:'center', toolbar: '#col-emp-toolbar'}
-                ]]
-            });
-
-            //监听表单提交
-            form.on('submit(btn-search-filter)', function(data){
-                console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
-                //刷新表格
-                table.reload('table-emp', {
-                    where: { //设定异步数据接口的额外参数，任意设
-                        name: data.field.name,
-                        startDate: data.field.startDate,
-                        endDate: data.field.endDate
-                    }
-                    ,page: {
-                        curr: 1 //重新从第 1 页开始
-                    }
-                });
-                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
-            });
-
-            //监听操作列
-            table.on('tool(table-emp-filter)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
-                var data = obj.data; //获得当前行数据
-                var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-
-                if(layEvent === 'del'){ //删除
-                    layer.confirm('您确认删除该员工：' + data.name + '?', {icon: 3, title:'删除确认'}, function(index){
-
-                        //异步请求删除数据，结果提示，刷新表格
-                        var url = ctxPath + "emp/" + data.empId;
-                        var params = {
-                            _method: "DELETE"
-                        };
-                        $.post(url,params,function (response) {
-                            if(response.code == 0){
-                                layer.msg(response.message, {icon: 1});
-                                refreshTable();
-                            }else {
-                                layer.alert(response.message, {icon: 2, anim: 6});
-                            }
-                        });
-
-                        layer.close(index);
-                    });
-                } else if(layEvent === 'edit'){
-                    layer.open({
-                        type: 2,
-                        title: "修改员工",
-                        area: ['50%','80%'],
-                        shade: [0.8, '#393D49'],
-                        content: ctxPath + 'emp/' + data.empId
-                    });
+            } else if (obj.event == 'delete'){
+                var checkStatus = table.checkStatus('table-emp'); //idTest 即为基础参数 id 对应的值
+                //如果没有选中任何数据
+                if(checkStatus.data.length == 0){
+                    layer.alert('您没有选中任何数据', {icon: 2,anim: 6,title: '警告'})
+                    return false;
                 }
+                //选中的id
+                var idArr = new Array();
+                $(checkStatus.data).each(function () {
+                    idArr.push(this.empId);
+                });
+                layer.confirm('您确认删除选中记录？', {icon: 3, title:'删除确认'}, function(index){
+
+                    //异步请求删除数据，结果提示，刷新表格
+                    var url = ctxPath + "emp/" + idArr.join(",");
+                    var params = {
+                        _method: "DELETE"
+                    };
+                    $.post(url,params,function (response) {
+                        if(response.code == 0){
+                            layer.msg(response.message, {icon: 1});
+                            refreshTable();
+                        }else {
+                            layer.alert(response.message, {icon: 2, anim: 6});
+                        }
+                    });
+
+                    layer.close(index);
+                });
+            }
+        });
+
+        $('.date').each(function() {
+            laydate.render({
+                elem : this,
             });
         });
+
+        //员工列表表格
+        table.render({
+            elem: '#table-emp'
+            ,url: ctxPath + 'emp/list' //数据接口
+            ,page: true //开启分页
+            ,toolbar: "#table-emp-toolbar"
+            ,limits: [5,10,30,50,100]
+            ,cols: [[ //表头
+                {type: 'checkbox', width:60}
+                ,{field: 'empId', title: '员工编号', width:120, sort: true, align:'center'}
+                ,{field: 'name', title: '姓名', width:140, align:'center'}
+                ,{field: 'sex', title: '性别', width:80, sort: true, align:'center', templet:'#convertSex'}
+                ,{field: 'age', title: '年龄', width:80, align:'center'}
+                ,{field: 'sal', title: '工资', width: 120, align:'right'}
+                ,{field: 'dept', title: '部门', width: 140, sort: true, align:'center', templet:'#convertDept'}
+                ,{field: 'birthday', title: '生日', width: 120, sort: true, align:'center'}
+                ,{field: 'address', title: '家庭住址'}
+                ,{title: '操作', width: 150, align:'center', toolbar: '#col-emp-toolbar'}
+            ]]
+        });
+
+        //监听表单提交
+        form.on('submit(btn-search-filter)', function(data){
+            console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+            //刷新表格
+            table.reload('table-emp', {
+                where: { //设定异步数据接口的额外参数，任意设
+                    name: data.field.name,
+                    startDate: data.field.startDate,
+                    endDate: data.field.endDate
+                }
+                ,page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+
+        //监听操作列
+        table.on('tool(table-emp-filter)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+
+            if(layEvent === 'del'){ //删除
+                layer.confirm('您确认删除该员工：' + data.name + '?', {icon: 3, title:'删除确认'}, function(index){
+
+                    //异步请求删除数据，结果提示，刷新表格
+                    var url = ctxPath + "emp/" + data.empId;
+                    var params = {
+                        _method: "DELETE"
+                    };
+                    $.post(url,params,function (response) {
+                        if(response.code == 0){
+                            layer.msg(response.message, {icon: 1});
+                            refreshTable();
+                        }else {
+                            layer.alert(response.message, {icon: 2, anim: 6});
+                        }
+                    });
+
+                    layer.close(index);
+                });
+            } else if(layEvent === 'edit'){
+                layer.open({
+                    type: 2,
+                    title: "修改员工",
+                    area: ['50%','80%'],
+                    shade: [0.8, '#393D49'],
+                    content: ctxPath + 'emp/' + data.empId
+                });
+            }
+        });
+    });
 </script>
 </body>
 </html>

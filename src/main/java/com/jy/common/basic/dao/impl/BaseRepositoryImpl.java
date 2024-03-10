@@ -67,10 +67,8 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRep
     }
 
     @Override
-    public Page<T> queryForPage(Map<String, Object> dslParamMap, Pageable pageable) {
-        List<T> content = hqlQueryBuilder.buildListQuery(getDomainClass(), dslParamMap, pageable).getResultList();
-        Long total = hqlQueryBuilder.buildCountQuery(getDomainClass(), dslParamMap).getSingleResult();
-        return new PageImpl<>(content, pageable, total);
+    public List<T> queryForList(Map<String, Object> dslParamMap, Pageable pageable) {
+        return hqlQueryBuilder.buildListQuery(getDomainClass(), dslParamMap, pageable).getResultList();
     }
 
     @Override

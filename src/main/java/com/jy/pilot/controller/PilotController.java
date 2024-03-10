@@ -32,7 +32,7 @@ public class PilotController {
     @GetMapping("/list")
     @ResponseBody
     public Result<Object> getPilotList(PilotQuery query){
-        List<Pilot> list = pilotService.listByQuery(query);
+        List<Pilot> list = pilotService.pageByQuery(query);
         Long count = pilotService.countByQuery(query);
         return Result.success(list,count);
     }
@@ -45,7 +45,7 @@ public class PilotController {
     }
 
     @GetMapping("/add/ui")
-    public String toAddUI(Model model){
+    public String toAddUI(){
         return "pilot/pilotAdd";
     }
 
@@ -58,8 +58,7 @@ public class PilotController {
 
     @GetMapping("/{id}")
     public String getEmpById(@PathVariable("id") Long id, Model model) {
-        Pilot pilot = pilotService.findById(id);
-        model.addAttribute("pilot", pilot);
+        model.addAttribute("pilot", pilotService.findById(id));
         return "pilot/pilotEdit";
     }
 

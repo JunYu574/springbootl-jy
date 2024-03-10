@@ -24,22 +24,22 @@
 </head>
 <body>
 <div class="div-content">
+    <span id="dictId" th:text="${dictId}" style="display: none"></span>
     <form class="layui-form layui-form-pane" id="form-search">
         <fieldset class="table-search-fieldset">
             <legend>搜索条件</legend>
             <div class="layui-form-item">
-
                 <div class="layui-inline">
-                    <label class="layui-form-label">名称</label>
+                    <label class="layui-form-label">字典代码</label>
                     <div class="layui-input-inline" style="width: 150px;">
-                        <input type="text" name="name" autocomplete="off" class="layui-input">
+                        <input type="text" name="dictCode" autocomplete="off" class="layui-input">
                     </div>
                 </div>
 
                 <div class="layui-inline">
-                    <label class="layui-form-label">势力</label>
+                    <label class="layui-form-label">字典名称</label>
                     <div class="layui-input-inline" style="width: 150px;">
-                        <input type="text" name="influence" autocomplete="off" class="layui-input">
+                        <input type="text" name="dictName" autocomplete="off" class="layui-input">
                     </div>
                 </div>
 
@@ -58,26 +58,26 @@
         </fieldset>
     </form>
 
-    <table id="table-pilot" lay-filter="table-pilot-filter"></table>
+    <table id="table-sub-dict" lay-filter="table-sub-dict-filter"></table>
 </div>
-<script type="text/html" id="convertSex">
+<script type="text/html" id="convertEnabled">
     {{#
-        if(d.sex == 'M'){
-            return '男';
-        }else if(d.sex == 'F'){
-            return '女';
+        if(d.enabled == true){
+            return '是';
+        }else if(d.enabled == false){
+            return '否';
         }else{
-            return '/';
+            return '无效';
         }
     }}
 </script>
-<script type="text/html" id="table-pilot-toolbar">
+<script type="text/html" id="table-sub-dict-toolbar">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
         <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete">删除</button>
     </div>
 </script>
-<script type="text/html" id="col-pilot-toolbar">
+<script type="text/html" id="col-sub-dict-toolbar">
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
@@ -91,22 +91,25 @@
     }
 
     var ctxPath = [[@{/}]];
+
     layui.use(['table','form'], function(){
         var table = layui.table;
         var form = layui.form;
 
+        var dictId = $('#dictId').text();
+
         //表格头部工具栏监听
-        table.on('toolbar(table-pilot-filter)', function(obj) {
+        table.on('toolbar(table-sub-dict-filter)', function(obj) {
             if (obj.event == 'add') {
                 layer.open({
                     type: 2,
-                    title: "新增机师",
+                    title: "新增字典子项",
                     area: ['50%','80%'],
                     shade: [0.8, '#393D49'],
-                    content: ctxPath + 'pilot/add/ui'
+                    content: ctxPath + 'conf/dict/sub/add/ui/' + dictId
                 });
             } else if (obj.event == 'delete'){
-                var checkStatus = table.checkStatus('table-pilot'); //idTest 即为基础参数 id 对应的值
+                var checkStatus = table.checkStatus('table-sub-dict'); //idTest 即为基础参数 id 对应的值
                 //如果没有选中任何数据
                 if(checkStatus.data.length == 0){
                     layer.alert('您没有选中任何数据', {icon: 2,anim: 6,title: '警告'})
@@ -120,7 +123,7 @@
                 layer.confirm('您确认删除选中记录？', {icon: 3, title:'删除确认'}, function(index){
 
                     //异步请求删除数据，结果提示，刷新表格
-                    var url = ctxPath + "pilot/" + idArr.join(",");
+                    var url = ctxPath + "conf/dict/sub/" + idArr.join(",");
                     var params = {
                         _method: "DELETE"
                     };
@@ -138,30 +141,31 @@
             }
         });
 
-        //机师列表表格
+        //字典列表表格
         table.render({
-            elem: '#table-pilot'
-            ,url: ctxPath + 'pilot/list' //数据接口
+            elem: '#table-sub-dict'
+            ,url: ctxPath + 'conf/dict/sub/list?dictId=' + dictId   //数据接口
             ,page: true //开启分页
-            ,toolbar: "#table-pilot-toolbar"
+            ,toolbar: "#table-sub-dict-toolbar"
             ,limits: [5,10,30,50,100]
             ,cols: [[ //表头
                 {type: 'checkbox', width:60}
                 ,{field: 'id', title: '序号', width:120, sort: true, align:'center'}
-                ,{field: 'name', title: '姓名', width:140, align:'center'}
-                ,{field: 'influence', title: '势力', width:140, align:'center'}
-                ,{field: 'sex', title: '性别', width:80, sort: true, align:'center', templet:'#convertSex'}
-                ,{title: '操作', width: 150, align:'center', toolbar: '#col-pilot-toolbar'}
+                ,{field: 'dictCode', title: '字典代码', width:400, sort: true, align:'center'}
+                ,{field: 'dictName', title: '字典名称', align:'center'}
+                ,{field: 'enabled', title: '是否启用', width:200, align:'center', templet:'#convertEnabled'}
+                ,{title: '操作', width: 150, align:'center', toolbar: '#col-sub-dict-toolbar'}
             ]]
         });
 
         //监听表单提交
         form.on('submit(btn-search-filter)', function(data){
             //刷新表格
-            table.reload('table-pilot', {
+            table.reload('table-sub-dict', {
                 where: { //设定异步数据接口的额外参数，任意设
-                    name: data.field.name,
-                    influence: data.field.influence
+                    dictId: dictId,
+                    dictCode: data.field.dictCode,
+                    dictName: data.field.dictName
                 }
                 ,page: {
                     curr: 1 //重新从第 1 页开始
@@ -171,15 +175,15 @@
         });
 
         //监听操作列
-        table.on('tool(table-pilot-filter)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+        table.on('tool(table-sub-dict-filter)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 
             if(layEvent === 'del'){ //删除
-                layer.confirm('您确认删除该机师：' + data.name + '?', {icon: 3, title:'删除确认'}, function(index){
+                layer.confirm('您确认删除该字典：' + data.name + '?', {icon: 3, title:'删除确认'}, function(index){
 
                     //异步请求删除数据，结果提示，刷新表格
-                    var url = ctxPath + "pilot/" + data.id;
+                    var url = ctxPath + "conf/dict/sub/" + data.id;
                     var params = {
                         _method: "DELETE"
                     };
@@ -197,10 +201,10 @@
             } else if(layEvent === 'edit'){
                 layer.open({
                     type: 2,
-                    title: "修改机师信息",
+                    title: "修改字典信息",
                     area: ['50%','80%'],
                     shade: [0.8, '#393D49'],
-                    content: ctxPath + 'pilot/' + data.id
+                    content: ctxPath + 'conf/dict/sub/' + data.id
                 });
             }
         });

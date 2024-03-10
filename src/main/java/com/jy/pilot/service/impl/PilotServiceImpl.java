@@ -29,21 +29,26 @@ public class PilotServiceImpl extends BaseServiceImpl<Pilot, Long> implements Pi
 
     @Override
     public List<Pilot> listByQuery(PilotQuery query) {
-        return queryForList(addDefaultConditions(convert(query)));
+        return pilotRepository.queryForList(addDefaultConditions(convert(query)));
+    }
+
+    @Override
+    public List<Pilot> pageByQuery(PilotQuery query) {
+        return pilotRepository.queryForList(addDefaultConditions(convert(query)), getPage(query.getPage(), query.getLimit(), null));
     }
 
     @Override
     public long countByQuery(PilotQuery query) {
-        return queryForCount(addDefaultConditions(convert(query)));
+        return pilotRepository.queryForCount(addDefaultConditions(convert(query)));
     }
 
     public Map<String, Object> convert(PilotQuery query){
         Map<String, Object> params = new HashMap<>();
         if(StringUtils.isNotBlank(query.getName())){
-            params.put("like(name)", query.getName());
+            params.put("like(name)", "%" + query.getName() + "%");
         }
         if(StringUtils.isNotBlank(query.getInfluence())){
-            params.put("like(influence)", query.getInfluence());
+            params.put("like(influence)", "%" + query.getInfluence() + "%");
         }
         return params;
     }

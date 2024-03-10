@@ -1,7 +1,6 @@
 package com.jy.common.basic.service;
 
 import com.jy.common.basic.entiry.BaseEntity;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
@@ -103,7 +102,7 @@ public interface BaseService<T extends BaseEntity, ID> {
      * @param pageable 分页信息
      * @return
      */
-    Page<T> queryForPage(Map<String, Object> params, Pageable pageable);
+    List<T> queryForList(Map<String, Object> params, Pageable pageable);
 
     /**
      * 根据条件查询返回单个对象

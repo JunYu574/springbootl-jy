@@ -53,12 +53,12 @@ public interface BaseRepository<T, ID> extends JpaRepository<T, ID> {
     List<T> queryForList(Map<String, Object> dslParamMap, Sort sort);
 
     /**
-     * 根据DSL信息查询实体信息，支持分页
+     * 根据DSL信息查询实体信息，支持排序
      * @param dslParamMap 参数信息
      * @param pageable 分页信息
      * @return
      */
-    Page<T> queryForPage(Map<String, Object> dslParamMap, Pageable pageable);
+    List<T> queryForList(Map<String, Object> dslParamMap, Pageable pageable);
 
     /**
      * 根据DSL参数查询实体信息

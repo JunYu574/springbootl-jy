@@ -14,25 +14,33 @@
     </style>
 </head>
 <body>
-<form class="layui-form" action="" th:object="${pilot}">
+<form class="layui-form" action="" th:object="${dict}">
     <input type="hidden" th:field="*{id}">
     <div class="layui-form-item">
-        <label class="layui-form-label">机师名称</label>
+        <label class="layui-form-label">字典代码</label>
         <div class="layui-input-block">
-            <input type="text" th:field="*{name}" required="required"  lay-verify="required" placeholder="请输入机师名称" autocomplete="off" class="layui-input">
+            <input type="text" th:field="*{dictCode}" required="required"  lay-verify="required" placeholder="请输入字典代码" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">性别</label>
+        <label class="layui-form-label">字典名称</label>
         <div class="layui-input-block">
-            <input type="radio" th:field="*{sex}" value="M" title="男">
-            <input type="radio" th:field="*{sex}" value="F" title="女">
+            <input type="text" th:field="*{dictName}" required="required"  lay-verify="required" placeholder="请输入字典名称" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">所属势力</label>
+        <label class="layui-form-label">字典类型</label>
         <div class="layui-input-block">
-            <input type="text" th:field="*{influence}" required="required"  lay-verify="required" placeholder="请输入所属势力" autocomplete="off" class="layui-input">
+            <select name="dictType" lay-verify="required">
+                <option value="">请选择</option>
+                <option th:each="dictType:${dictCatalog}" th:value="${dictType.key}"><span th:text="${dictType.value}"></span></option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">字典描述</label>
+        <div class="layui-input-block">
+            <input type="text" th:field="*{dictDescription}" required="required"  lay-verify="required" placeholder="请输入字典描述" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -53,7 +61,7 @@
         form.on('submit(btn-submit-filter)', function(data){
             $("#btn-submit").attr("disabled", "disabled").addClass("layui-btn-disabled");
             //异步请求提交数据
-            var url = ctxPath + "pilot";
+            var url = ctxPath + "conf/dict";
             data.field._method = "PUT";
             $.post(url, data.field, function (response) {
                 if(response.code == 0){

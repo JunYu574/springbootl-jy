@@ -1,5 +1,6 @@
 package com.jy.pilot.vo;
 
+import com.jy.common.vo.Page;
 import lombok.Data;
 
 /**
@@ -9,7 +10,7 @@ import lombok.Data;
  * @Version: V1.0.0
  */
 @Data
-public class PilotQuery {
+public class PilotQuery extends Page {
     /** 机师 */
     private String name;
     /** 势力 */

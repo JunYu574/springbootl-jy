@@ -7,7 +7,7 @@ import com.jy.common.basic.service.BaseService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,6 +44,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity, ID> implements BaseS
     @Transactional(rollbackFor = Exception.class)
     @Override
     public T update(T entity) {
+        entity.setUpdateTime(new Date());
         return repository.save(entity);
     }
 
@@ -108,8 +109,8 @@ public abstract class BaseServiceImpl<T extends BaseEntity, ID> implements BaseS
     }
 
     @Override
-    public Page<T> queryForPage(Map<String, Object> params, Pageable pageable) {
-        return repository.queryForPage(params, pageable);
+    public List<T> queryForList(Map<String, Object> params, Pageable pageable) {
+        return repository.queryForList(params, pageable);
     }
 
     @Override
@@ -127,9 +128,14 @@ public abstract class BaseServiceImpl<T extends BaseEntity, ID> implements BaseS
         newParams.putAll(params);
         if(!params.keySet().stream().anyMatch(key ->
                 StringUtils.equalsIgnoreCase(key, "eq(deleted)")) && BaseEntity.class.isAssignableFrom(repository.getDomainClass())){
-            newParams.put("eq(deleted)", Boolean.FALSE);
+            newParams.put("EQ(deleted)", Boolean.FALSE);
         }
         newParams.put("sort(sort)","asc");
         return newParams;
+    }
+
+
+    protected Pageable getPage(Integer pageNumber, Integer pageSize, Sort sort){
+        return PageRequest.of((pageNumber == 0 ? 1 : pageNumber) - 1, pageSize, sort != null ? sort : Sort.by(Sort.Direction.ASC, "createTime"));
     }
 }

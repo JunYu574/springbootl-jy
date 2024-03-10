@@ -22,6 +22,13 @@ public interface PilotService extends BaseService<Pilot, Long> {
     List<Pilot> listByQuery(PilotQuery query);
 
     /**
+     * 查询当前页数据
+     * @param query
+     * @return
+     */
+    List<Pilot> pageByQuery(PilotQuery query);
+
+    /**
      * 查询数量
      * @param query
      * @return

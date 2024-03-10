@@ -14,25 +14,24 @@
     </style>
 </head>
 <body>
-<form class="layui-form" action="" th:object="${pilot}">
-    <input type="hidden" th:field="*{id}">
+<form class="layui-form" action="">
+    <span id="dictId" th:text="${dictId}" style="display: none"></span>
     <div class="layui-form-item">
-        <label class="layui-form-label">机师名称</label>
+        <label class="layui-form-label">字典代码</label>
         <div class="layui-input-block">
-            <input type="text" th:field="*{name}" required="required"  lay-verify="required" placeholder="请输入机师名称" autocomplete="off" class="layui-input">
+            <input type="text" name="dictCode" required  lay-verify="required" placeholder="请输入字典代码" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">性别</label>
+        <label class="layui-form-label">字典名称</label>
         <div class="layui-input-block">
-            <input type="radio" th:field="*{sex}" value="M" title="男">
-            <input type="radio" th:field="*{sex}" value="F" title="女">
+            <input type="text" name="dictName" required  lay-verify="required" placeholder="请输入字典名称" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">所属势力</label>
+        <label class="layui-form-label">是否启用</label>
         <div class="layui-input-block">
-            <input type="text" th:field="*{influence}" required="required"  lay-verify="required" placeholder="请输入所属势力" autocomplete="off" class="layui-input">
+            <input type="checkbox" name="enabled" lay-skin="switch" checked>
         </div>
     </div>
     <div class="layui-form-item">
@@ -51,10 +50,10 @@
 
         //表单提交
         form.on('submit(btn-submit-filter)', function(data){
+            var dictId = $('#dictId').text();
             $("#btn-submit").attr("disabled", "disabled").addClass("layui-btn-disabled");
             //异步请求提交数据
-            var url = ctxPath + "pilot";
-            data.field._method = "PUT";
+            var url = ctxPath + "conf/dict/sub/" + dictId;
             $.post(url, data.field, function (response) {
                 if(response.code == 0){
                     //成功提示
