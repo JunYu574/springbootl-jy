@@ -11,6 +11,7 @@ import lombok.Data;
  */
 @Data
 public class PilotQuery extends Page {
+
     /** 机师 */
     private String name;
     /** 势力 */

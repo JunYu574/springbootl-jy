@@ -151,7 +151,7 @@ public class BasicDictController {
         return Result.success("字典缓存刷新成功");
     }
 
-    @PostMapping("/sub/enabled/{id}")
+    @PutMapping("/sub/enabled/{id}")
     @ResponseBody
     public Result<Object> subDictEnabled(@PathVariable("id") Long id){
         GlobalDictionarySub subDict = globalDictionarySubService.findById(id);

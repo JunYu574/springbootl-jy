@@ -8,6 +8,7 @@ import com.jy.dict.service.GlobalDictionaryService;
 import com.jy.dict.vo.DictQuery;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -33,7 +34,7 @@ public class GlobalDictionaryServiceImpl extends BaseServiceImpl<GlobalDictionar
 
     @Override
     public List<GlobalDictionary> pageByQuery(DictQuery query) {
-        return sysDictRepository.queryForList(addDefaultConditions(convert(query)), getPage(query.getPage(), query.getLimit(), null));
+        return sysDictRepository.queryForList(addDefaultConditions(convert(query)), getPage(query.getPage(), query.getLimit(), Sort.by(Sort.Direction.ASC,"sort")));
     }
 
     @Override

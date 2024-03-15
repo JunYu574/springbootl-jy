@@ -45,7 +45,12 @@ public interface DictionaryConstants {
     /**
      * 机体类型
      */
-    String CACHE_MECHA_TYPE = "MECHA_TYPE";
+    String CACHE_MECHA_SHAPE_TYPE = "MECHA_SHAPE_TYPE";
+
+    /**
+     * 机体保有量等级
+     */
+    String CACHE_MECHA_RARITY_TYPE = "MECHA_RARITY_TYPE";
 
     /**
      * 机体品质等级
@@ -53,9 +58,9 @@ public interface DictionaryConstants {
     String CACHE_MECHA_QUALITY_TYPE = "MECHA_QUALITY_TYPE";
 
     /**
-     * 机体战斗类型
+     * 机体战斗射程
      */
-    String CACHE_MECHA_LOCATION_TYPE = "MECHA_LOCATION_TYPE";
+    String CACHE_MECHA_COMBAT_TYPE = "MECHA_COMBAT_TYPE";
 
 //    ============================== PARTS ==============================
 

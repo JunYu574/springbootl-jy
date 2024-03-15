@@ -84,6 +84,9 @@
         }
     }}
 </script>
+<script type="text/html" id="switchOnOff">
+    <input type="checkbox" mid={{d.id}} {{d.awakening=="1"?"checked":""}} lay-skin="switch" lay-filter="switch-pilot-awakening" lay-text="是|否">
+</script>
 <script type="text/html" id="table-pilot-toolbar">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
@@ -166,6 +169,7 @@
                 ,{field: 'dispositionName', title: '性格', width:140, align:'center'}
                 ,{field: 'influenceName', title: '势力', align:'center'}
                 ,{field: 'sort', title: '排序', width: 120, sort: true, align:'center'}
+                ,{field: 'awakening', title: '是否觉醒', width:200, align:'center', templet:'#switchOnOff'}
                 ,{title: '操作', width: 150, align:'center', toolbar: '#col-pilot-toolbar'}
             ]]
         });
@@ -219,6 +223,23 @@
                     content: ctxPath + 'pilot/' + data.id
                 });
             }
+        });
+
+        form.on('switch(switch-pilot-awakening)', function(){
+            var id = $(this).attr('mid');//为了获取开关所在行的信息，需要绑定上所在行的id
+            var url = ctxPath + 'pilot/awakening/' + id;
+            var params = {
+                _method: "PUT"
+            };
+            $.post(url, params, function (response) {
+                if(response.code == 0){
+                    layer.msg(response.message, {icon: 1});
+                    refreshTable();
+                }else {
+                    layer.alert(response.message, {icon: 2, anim: 6});
+                }
+            });
+
         });
     });
 </script>

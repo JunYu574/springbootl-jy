@@ -7,6 +7,7 @@ import com.jy.dict.service.GlobalDictionarySubService;
 import com.jy.dict.vo.SubDictQuery;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -32,7 +33,7 @@ public class GlobalDictionarySubServiceImpl extends BaseServiceImpl<GlobalDictio
 
     @Override
     public List<GlobalDictionarySub> pageByQuery(SubDictQuery query) {
-        return sysSubDictRepository.queryForList(addDefaultConditions(convert(query)), getPage(query.getPage(), query.getLimit(), null));
+        return sysSubDictRepository.queryForList(addDefaultConditions(convert(query)), getPage(query.getPage(), query.getLimit(), Sort.by(Sort.Direction.ASC,"sort")));
     }
 
     @Override

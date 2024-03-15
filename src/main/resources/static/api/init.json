@@ -26,10 +26,24 @@
               "href": "emp",
               "icon": "layui-icon layui-icon-user",
               "target": "_self"
-            },
+            }
+          ]
+        },
+        {
+          "title": "机动战队",
+          "href": "",
+          "icon": "fa fa-home",
+          "target": "_self",
+          "child": [
             {
               "title": "机师列表",
               "href": "pilot",
+              "icon": "layui-icon layui-icon-list",
+              "target": "_self"
+            },
+            {
+              "title": "机体列表",
+              "href": "mecha",
               "icon": "layui-icon layui-icon-list",
               "target": "_self"
             },

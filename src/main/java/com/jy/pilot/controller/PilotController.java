@@ -69,13 +69,13 @@ public class PilotController {
 
     @DeleteMapping("/{ids}")
     @ResponseBody
-    public Result<Object> deleteEmpByIds(@PathVariable("ids") Long... ids){
+    public Result<Object> deletePilotByIds(@PathVariable("ids") Long... ids){
         pilotService.deleteByIds(ids);
         return Result.success("删除员工成功");
     }
 
     @GetMapping("/{id}")
-    public String getEmpById(@PathVariable("id") Long id, Model model) {
+    public String getPilotById(@PathVariable("id") Long id, Model model) {
         model.addAttribute("pilot", pilotService.findById(id));
         //机师势力
         model.addAttribute("pilotInfluence", CacheDict.dictMap.get(DictionaryConstants.CACHE_PILOT_INFLUENCE_TYPE));
@@ -86,8 +86,17 @@ public class PilotController {
 
     @PutMapping("")
     @ResponseBody
-    public Result<Object> updateEmp(Pilot pilot){
+    public Result<Object> updatePilot(Pilot pilot){
         pilotService.update(pilot);
         return Result.success("机师信息修改成功");
+    }
+
+    @PutMapping("/awakening/{id}")
+    @ResponseBody
+    public Result<Object> subDictEnabled(@PathVariable("id") Long id){
+        Pilot pilot = pilotService.findById(id);
+        pilot.setAwakening(!pilot.isAwakening());
+        pilotService.update(pilot);
+        return Result.success("机师觉醒状态已修改");
     }
 }

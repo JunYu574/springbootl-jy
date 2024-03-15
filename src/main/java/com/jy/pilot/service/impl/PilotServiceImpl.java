@@ -7,6 +7,7 @@ import com.jy.pilot.service.PilotService;
 import com.jy.pilot.vo.PilotQuery;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +35,7 @@ public class PilotServiceImpl extends BaseServiceImpl<Pilot, Long> implements Pi
 
     @Override
     public List<Pilot> pageByQuery(PilotQuery query) {
-        return pilotRepository.queryForList(addDefaultConditions(convert(query)), getPage(query.getPage(), query.getLimit(), null));
+        return pilotRepository.queryForList(addDefaultConditions(convert(query)), getPage(query.getPage(), query.getLimit(), Sort.by(Sort.Direction.ASC,"sort")));
     }
 
     @Override

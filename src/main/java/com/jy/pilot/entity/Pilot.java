@@ -59,6 +59,6 @@ public class Pilot extends BaseEntity {
      * 是否觉醒
      */
     @Column(name = "is_awakening", nullable = false)
-    private boolean awakenin;
+    private boolean awakening;
 
 }
