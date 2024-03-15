@@ -39,7 +39,13 @@
     <div class="layui-form-item">
         <label class="layui-form-label">字典描述</label>
         <div class="layui-input-block">
-            <input type="text" name="dictDescription" required  lay-verify="required" placeholder="请输入字典描述" autocomplete="off" class="layui-input">
+            <input type="text" name="dictDescription" placeholder="请输入字典描述" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-block">
+            <input type="text" name="sort" placeholder="排序" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -60,7 +66,7 @@
         form.on('submit(btn-submit-filter)', function(data){
             $("#btn-submit").attr("disabled", "disabled").addClass("layui-btn-disabled");
             //异步请求提交数据
-            var url = ctxPath + "conf/dict";
+            var url = ctxPath + 'conf/dict';
             $.post(url, data.field, function (response) {
                 if(response.code == 0){
                     //成功提示

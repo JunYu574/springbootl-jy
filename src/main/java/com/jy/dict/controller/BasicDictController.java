@@ -2,6 +2,7 @@ package com.jy.dict.controller;
 
 import com.jy.common.cache.CacheDict;
 import com.jy.common.constants.DictionaryConstants;
+import com.jy.common.utils.DictUtils;
 import com.jy.common.vo.Result;
 import com.jy.dict.entity.GlobalDictionary;
 import com.jy.dict.entity.GlobalDictionarySub;
@@ -9,6 +10,7 @@ import com.jy.dict.service.GlobalDictionaryService;
 import com.jy.dict.service.GlobalDictionarySubService;
 import com.jy.dict.vo.DictQuery;
 import com.jy.dict.vo.SubDictQuery;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +30,8 @@ import java.util.Map;
 public class BasicDictController {
 
     @Resource
+    DictUtils dictUtils;
+    @Resource
     GlobalDictionaryService globalDictionaryService;
     @Resource
     GlobalDictionarySubService globalDictionarySubService;
@@ -42,17 +46,12 @@ public class BasicDictController {
     @GetMapping("/list")
     @ResponseBody
     public Result<Object> getDictList(DictQuery query){
+        List<GlobalDictionary> list = globalDictionaryService.pageByQuery(query);
+        Long count = globalDictionaryService.countByQuery(query);
         //字典分类
         Map<String, String> dictTypeMap = CacheDict.dictMap.get(DictionaryConstants.CACHE_DICT_CATALOG);
-        List<GlobalDictionary> list = globalDictionaryService.pageByQuery(query);
-        for (GlobalDictionary dict : list) {
-            if (dictTypeMap.containsKey(dict.getDictType())) {
-                dict.setDictTypeName(dictTypeMap.get(dict.getDictType()));
-            } else {
-                dict.setDictTypeName(dict.getDictType());
-            }
-        }
-        Long count = globalDictionaryService.countByQuery(query);
+        list.stream().filter(dict -> StringUtils.isNotBlank(dict.getDictType()))
+                .forEach(dict -> dict.setDictTypeName(dictTypeMap.containsKey(dict.getDictType()) ? dictTypeMap.get(dict.getDictType()) : dict.getDictType()));
         return Result.success(list,count);
     }
 
@@ -73,7 +72,11 @@ public class BasicDictController {
     @DeleteMapping("/{ids}")
     @ResponseBody
     public Result<Object> deleteDictByIds(@PathVariable("ids") Long... ids){
-        globalDictionaryService.deleteByIds(ids);
+        for (Long id : ids){
+            GlobalDictionary dict = globalDictionaryService.findById(id);
+            dict.getSubDicts().forEach(sunDict -> globalDictionarySubService.deleteById(sunDict.getId()));
+            globalDictionaryService.deleteById(id);
+        }
         return Result.success("删除字典成功");
     }
 
@@ -112,7 +115,7 @@ public class BasicDictController {
         GlobalDictionary dict = globalDictionaryService.findById(dictId);
         subDict.setDict(dict);
         globalDictionarySubService.save(subDict);
-        return Result.success("新增字典成功！");
+        return Result.success("新增字典子项成功！");
     }
 
     @GetMapping("/sub/add/ui/{dictId}")
@@ -140,4 +143,21 @@ public class BasicDictController {
         globalDictionarySubService.update(subDict);
         return Result.success("字典信息修改成功");
     }
+
+    @PostMapping("/refresh/cache")
+    @ResponseBody
+    public Result<Object> refreshCacheDict(){
+        dictUtils.refreshCacheDictionary();
+        return Result.success("字典缓存刷新成功");
+    }
+
+    @PostMapping("/sub/enabled/{id}")
+    @ResponseBody
+    public Result<Object> subDictEnabled(@PathVariable("id") Long id){
+        GlobalDictionarySub subDict = globalDictionarySubService.findById(id);
+        subDict.setEnabled(!subDict.isEnabled());
+        globalDictionarySubService.update(subDict);
+        return Result.success("字典子项启用状态已修改");
+    }
+
 }

@@ -75,10 +75,17 @@ public class DictUtils {
     }
 
     /**
-     * 缓存字典信息
+     * 刷新字典缓存
+     */
+    public void refreshCacheDictionary() {
+        redisUtil.del("IsCacheDict");
+        cacheDictionary();
+    }
+
+    /**
+     * 缓存字典信息，过滤未启用的
      */
     public void cacheDictionary() {
-        redisUtil.del("IsCacheDict");
         if (!redisUtil.containsKey("IsCacheDict")) {
             List<GlobalDictionary> globalDictionaries = globalDictionaryService.getAllGlobalDictionaryInfo();
             /**
@@ -91,8 +98,10 @@ public class DictUtils {
                     continue;
                 }
                 Map<Object, Object> dictMap = new LinkedHashMap<>();
-                for (GlobalDictionarySub subdict : subDicts) {
-                    dictMap.put(subdict.getDictCode(), subdict.getDictName());
+                for (GlobalDictionarySub subDict : subDicts) {
+                    if (subDict.isEnabled()) {
+                        dictMap.put(subDict.getDictCode(), subDict.getDictName());
+                    }
                 }
                 redisUtil.cacheValue("IsCacheDict", true, 604800);
                 redisUtil.del(dict.getDictCode());

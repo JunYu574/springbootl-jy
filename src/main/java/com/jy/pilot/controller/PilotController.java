@@ -1,15 +1,19 @@
 package com.jy.pilot.controller;
 
+import com.jy.common.cache.CacheDict;
+import com.jy.common.constants.DictionaryConstants;
 import com.jy.common.vo.Result;
 import com.jy.pilot.entity.Pilot;
 import com.jy.pilot.service.PilotService;
 import com.jy.pilot.vo.PilotQuery;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: JunYu
@@ -25,7 +29,11 @@ public class PilotController {
     private PilotService pilotService;
 
     @GetMapping("")
-    public String toPilotListUI(){
+    public String toPilotListUI(Model model){
+        //机师势力
+        model.addAttribute("pilotInfluence", CacheDict.dictMap.get(DictionaryConstants.CACHE_PILOT_INFLUENCE_TYPE));
+        //机师性格
+        model.addAttribute("pilotDisposition", CacheDict.dictMap.get(DictionaryConstants.CACHE_PILOT_DISPOSITION_TYPE));
         return "pilot/pilotList";
     }
 
@@ -34,6 +42,12 @@ public class PilotController {
     public Result<Object> getPilotList(PilotQuery query){
         List<Pilot> list = pilotService.pageByQuery(query);
         Long count = pilotService.countByQuery(query);
+        //机师势力
+        Map<String, String> pilotInfluenceMap = CacheDict.dictMap.get(DictionaryConstants.CACHE_PILOT_INFLUENCE_TYPE);
+        list.stream().filter(pilot -> StringUtils.isNotBlank(pilot.getInfluence())).forEach(pilot -> pilot.setInfluenceName(pilotInfluenceMap.get(pilot.getInfluence())));
+        //机师性格
+        Map<String, String> pilotDispositionMap = CacheDict.dictMap.get(DictionaryConstants.CACHE_PILOT_DISPOSITION_TYPE);
+        list.stream().filter(pilot -> StringUtils.isNotBlank(pilot.getDisposition())).forEach(pilot -> pilot.setDispositionName(pilotDispositionMap.get(pilot.getDisposition())));
         return Result.success(list,count);
     }
 
@@ -45,7 +59,11 @@ public class PilotController {
     }
 
     @GetMapping("/add/ui")
-    public String toAddUI(){
+    public String toAddUI(Model model){
+        //机师势力
+        model.addAttribute("pilotInfluence", CacheDict.dictMap.get(DictionaryConstants.CACHE_PILOT_INFLUENCE_TYPE));
+        //机师性格
+        model.addAttribute("pilotDisposition", CacheDict.dictMap.get(DictionaryConstants.CACHE_PILOT_DISPOSITION_TYPE));
         return "pilot/pilotAdd";
     }
 
@@ -59,6 +77,10 @@ public class PilotController {
     @GetMapping("/{id}")
     public String getEmpById(@PathVariable("id") Long id, Model model) {
         model.addAttribute("pilot", pilotService.findById(id));
+        //机师势力
+        model.addAttribute("pilotInfluence", CacheDict.dictMap.get(DictionaryConstants.CACHE_PILOT_INFLUENCE_TYPE));
+        //机师性格
+        model.addAttribute("pilotDisposition", CacheDict.dictMap.get(DictionaryConstants.CACHE_PILOT_DISPOSITION_TYPE));
         return "pilot/pilotEdit";
     }
 

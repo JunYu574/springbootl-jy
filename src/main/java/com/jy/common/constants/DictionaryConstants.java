@@ -13,9 +13,60 @@ public interface DictionaryConstants {
      */
     String CACHE_DICT_CATALOG = "DICT_CATALOG";
 
+//    ============================== PILOT ==============================
+
     /**
-     * 势力名称
+     * 机师势力名称
      */
-    String INFLUENCE_TYPE = "INFLUENCE_TYPE";
+    String CACHE_PILOT_INFLUENCE_TYPE = "PILOT_INFLUENCE_TYPE";
+
+    /**
+     * 机师性格类型
+     */
+    String CACHE_PILOT_DISPOSITION_TYPE = "PILOT_DISPOSITION_TYPE";
+
+    /**
+     * 机师礼物品质
+     */
+    String CACHE_PILOT_GIFT_TYPE = "PILOT_GIFT_TYPE";
+
+    /**
+     * 机师副官技能类型
+     */
+    String CACHE_PILOT_SKILL_TYPE = "PILOT_SKILL_TYPE";
+
+//    ============================== MECHA ==============================
+
+    /**
+     * 机体势力名称
+     */
+    String CACHE_MECHA_INFLUENCE_TYPE = "MECHA_INFLUENCE_TYPE";
+
+    /**
+     * 机体类型
+     */
+    String CACHE_MECHA_TYPE = "MECHA_TYPE";
+
+    /**
+     * 机体品质等级
+     */
+    String CACHE_MECHA_QUALITY_TYPE = "MECHA_QUALITY_TYPE";
+
+    /**
+     * 机体战斗类型
+     */
+    String CACHE_MECHA_LOCATION_TYPE = "MECHA_LOCATION_TYPE";
+
+//    ============================== PARTS ==============================
+
+    /**
+     * 配件品质
+     */
+    String CACHE_PARTS_QUALITY_TYPE = "PARTS_QUALITY_TYPE";
+
+    /**
+     * 配件装配位置
+     */
+    String CACHE_PARTS_LOCATION_TYPE = "PARTS_LOCATION_TYPE";
 
 }

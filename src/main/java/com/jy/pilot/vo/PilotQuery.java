@@ -15,5 +15,7 @@ public class PilotQuery extends Page {
     private String name;
     /** 势力 */
     private String influence;
+    /** 性格 */
+    private String disposition;
 
 }

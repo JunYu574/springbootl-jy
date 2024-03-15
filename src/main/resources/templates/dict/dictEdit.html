@@ -31,7 +31,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">字典类型</label>
         <div class="layui-input-block">
-            <select name="dictType" lay-verify="required">
+            <select th:field="*{dictType}" lay-verify="required">
                 <option value="">请选择</option>
                 <option th:each="dictType:${dictCatalog}" th:value="${dictType.key}"><span th:text="${dictType.value}"></span></option>
             </select>
@@ -40,7 +40,13 @@
     <div class="layui-form-item">
         <label class="layui-form-label">字典描述</label>
         <div class="layui-input-block">
-            <input type="text" th:field="*{dictDescription}" required="required"  lay-verify="required" placeholder="请输入字典描述" autocomplete="off" class="layui-input">
+            <input type="text" th:field="*{dictDescription}" placeholder="请输入字典描述" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-block">
+            <input type="text" th:field="*{sort}" placeholder="排序" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -61,7 +67,7 @@
         form.on('submit(btn-submit-filter)', function(data){
             $("#btn-submit").attr("disabled", "disabled").addClass("layui-btn-disabled");
             //异步请求提交数据
-            var url = ctxPath + "conf/dict";
+            var url = ctxPath + 'conf/dict';
             data.field._method = "PUT";
             $.post(url, data.field, function (response) {
                 if(response.code == 0){

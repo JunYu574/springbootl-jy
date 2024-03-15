@@ -39,7 +39,20 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">势力</label>
                     <div class="layui-input-inline" style="width: 150px;">
-                        <input type="text" name="influence" autocomplete="off" class="layui-input">
+                        <select name="influence" lay-search>
+                            <option value="">请选择</option>
+                            <option th:each="influence:${pilotInfluence}" th:value="${influence.key}"><span th:text="${influence.value}"></span></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">性格</label>
+                    <div class="layui-input-inline" style="width: 150px;">
+                        <select name="disposition">
+                            <option value="">请选择</option>
+                            <option th:each="disposition:${pilotDisposition}" th:value="${disposition.key}"><span th:text="${disposition.value}"></span></option>
+                        </select>
                     </div>
                 </div>
 
@@ -120,11 +133,11 @@
                 layer.confirm('您确认删除选中记录？', {icon: 3, title:'删除确认'}, function(index){
 
                     //异步请求删除数据，结果提示，刷新表格
-                    var url = ctxPath + "pilot/" + idArr.join(",");
+                    var url = ctxPath + 'pilot/' + idArr.join(",");
                     var params = {
                         _method: "DELETE"
                     };
-                    $.post(url,params,function (response) {
+                    $.post(url, params, function (response) {
                         if(response.code == 0){
                             layer.msg(response.message, {icon: 1});
                             refreshTable();
@@ -147,10 +160,12 @@
             ,limits: [5,10,30,50,100]
             ,cols: [[ //表头
                 {type: 'checkbox', width:60}
-                ,{field: 'id', title: '序号', width:120, sort: true, align:'center'}
-                ,{field: 'name', title: '姓名', width:140, align:'center'}
-                ,{field: 'influence', title: '势力', width:140, align:'center'}
-                ,{field: 'sex', title: '性别', width:80, sort: true, align:'center', templet:'#convertSex'}
+                ,{type: 'numbers', title: '序号', width: 120}
+                ,{field: 'name', title: '姓名', width:200, sort: true, align:'center'}
+                ,{field: 'sex', title: '性别', width:100, align:'center', templet:'#convertSex'}
+                ,{field: 'dispositionName', title: '性格', width:140, align:'center'}
+                ,{field: 'influenceName', title: '势力', align:'center'}
+                ,{field: 'sort', title: '排序', width: 120, sort: true, align:'center'}
                 ,{title: '操作', width: 150, align:'center', toolbar: '#col-pilot-toolbar'}
             ]]
         });
@@ -161,7 +176,8 @@
             table.reload('table-pilot', {
                 where: { //设定异步数据接口的额外参数，任意设
                     name: data.field.name,
-                    influence: data.field.influence
+                    influence: data.field.influence,
+                    disposition: data.field.disposition
                 }
                 ,page: {
                     curr: 1 //重新从第 1 页开始
@@ -175,15 +191,15 @@
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 
-            if(layEvent === 'del'){ //删除
+            if(layEvent == 'del'){ //删除
                 layer.confirm('您确认删除该机师：' + data.name + '?', {icon: 3, title:'删除确认'}, function(index){
 
                     //异步请求删除数据，结果提示，刷新表格
-                    var url = ctxPath + "pilot/" + data.id;
+                    var url = ctxPath + 'pilot/' + data.id;
                     var params = {
                         _method: "DELETE"
                     };
-                    $.post(url,params,function (response) {
+                    $.post(url, params, function (response) {
                         if(response.code == 0){
                             layer.msg(response.message, {icon: 1});
                             refreshTable();
@@ -194,7 +210,7 @@
 
                     layer.close(index);
                 });
-            } else if(layEvent === 'edit'){
+            } else if(layEvent == 'edit'){
                 layer.open({
                     type: 2,
                     title: "修改机师信息",

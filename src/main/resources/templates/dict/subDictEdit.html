@@ -30,6 +30,12 @@
         </div>
     </div>
     <div class="layui-form-item">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-block">
+            <input type="text" th:field="*{sort}" placeholder="排序，默认9999" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
         <label class="layui-form-label">是否启用</label>
         <div class="layui-input-block">
             <input type="checkbox" th:field="*{enabled}" lay-skin="switch">
@@ -53,7 +59,7 @@
         form.on('submit(btn-submit-filter)', function(data){
             $("#btn-submit").attr("disabled", "disabled").addClass("layui-btn-disabled");
             //异步请求提交数据
-            var url = ctxPath + "conf/dict/sub";
+            var url = ctxPath + 'conf/dict/sub';
             data.field._method = "PUT";
             $.post(url, data.field, function (response) {
                 if(response.code == 0){

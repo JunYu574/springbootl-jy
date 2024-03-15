@@ -110,8 +110,8 @@
             }
 
             //异步登录请求
-            var url = ctxPath + "user/login";
-            $.post(url,data,function (response) {
+            var url = ctxPath + 'user/login';
+            $.post(url, data, function (response) {
                 if(response.code == 0){
                     layer.msg('登录成功', {icon: 6, time: 2000}, function () {
                         $("#btn-login").removeAttr("disabled", "disabled").removeClass("layui-btn-disabled");

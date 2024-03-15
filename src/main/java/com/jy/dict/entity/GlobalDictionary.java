@@ -22,19 +22,19 @@ public class GlobalDictionary extends BaseEntity {
     /**
      * 字典代码
      */
-    @Column(name = "dict_code")
+    @Column(name = "dict_code", length = 100)
     private String dictCode;
 
     /**
      * 字典名称
      */
-    @Column(name = "dict_name")
+    @Column(name = "dict_name", length = 100)
     private String dictName;
 
     /**
      * 字典类型
      */
-    @Column(name = "dict_type")
+    @Column(name = "dict_type", length = 100)
     private String dictType;
 
     /**
@@ -46,7 +46,7 @@ public class GlobalDictionary extends BaseEntity {
     /**
      * 字典描述
      */
-    @Column(name = "dict_description")
+    @Column(name = "dict_description", length = 200)
     private String dictDescription;
 
     /**

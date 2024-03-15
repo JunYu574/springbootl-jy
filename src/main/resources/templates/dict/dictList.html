@@ -67,6 +67,7 @@
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
         <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete">删除</button>
+        <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="refresh">刷新缓存</button>
     </div>
 </script>
 <script type="text/html" id="col-dict-toolbar">
@@ -114,11 +115,11 @@
                 layer.confirm('您确认删除选中记录？', {icon: 3, title:'删除确认'}, function(index){
 
                     //异步请求删除数据，结果提示，刷新表格
-                    var url = ctxPath + "conf/dict/" + idArr.join(",");
+                    var url = ctxPath + 'conf/dict/' + idArr.join(",");
                     var params = {
                         _method: "DELETE"
                     };
-                    $.post(url,params,function (response) {
+                    $.post(url, params, function (response) {
                         if(response.code == 0){
                             layer.msg(response.message, {icon: 1});
                             refreshTable();
@@ -128,6 +129,16 @@
                     });
 
                     layer.close(index);
+                });
+            }else if (obj.event == 'refresh'){
+                var url = ctxPath + 'conf/dict/refresh/cache';
+                $.post(url, function (response) {
+                    if(response.code == 0){
+                        layer.msg(response.message, {icon: 1});
+                        refreshTable();
+                    }else {
+                        layer.alert(response.message, {icon: 2, anim: 6});
+                    }
                 });
             }
         });
@@ -141,11 +152,12 @@
             ,limits: [5,10,30,50,100]
             ,cols: [[ //表头
                 {type: 'checkbox', width:60}
-                ,{field: 'id', title: '序号', width:120, sort: true, align:'center'}
-                ,{field: 'dictCode', title: '字典代码', width:200, align:'center'}
+                ,{type: 'numbers', title: '序号', width: 120}
+                ,{field: 'dictCode', title: '字典代码', width:250, align:'center'}
                 ,{field: 'dictName', title: '字典名称', width:200, align:'center'}
-                ,{field: 'dictTypeName', title: '字典类型', width:200, align:'center'}
+                ,{field: 'dictTypeName', title: '字典类型', width:250, align:'center'}
                 ,{field: 'dictDescription', title: '字典描述'}
+                ,{field: 'sort', title: '排序', width: 120, sort: true, align:'center'}
                 ,{title: '操作', width: 220, align:'center', toolbar: '#col-dict-toolbar'}
             ]]
         });
@@ -170,15 +182,15 @@
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 
-            if(layEvent === 'del'){ //删除
-                layer.confirm('您确认删除该字典：' + data.name + '?', {icon: 3, title:'删除确认'}, function(index){
+            if(layEvent == 'del'){ //删除
+                layer.confirm('您确认删除该字典：' + data.dictName + '?', {icon: 3, title:'删除确认'}, function(index){
 
                     //异步请求删除数据，结果提示，刷新表格
-                    var url = ctxPath + "conf/dict/" + data.id;
+                    var url = ctxPath + 'conf/dict/' + data.id;
                     var params = {
                         _method: "DELETE"
                     };
-                    $.post(url,params,function (response) {
+                    $.post(url, params, function (response) {
                         if(response.code == 0){
                             layer.msg(response.message, {icon: 1});
                             refreshTable();
@@ -189,7 +201,7 @@
 
                     layer.close(index);
                 });
-            } else if(layEvent === 'edit'){
+            } else if(layEvent == 'edit'){
                 layer.open({
                     type: 2,
                     title: "修改字典信息",
@@ -197,7 +209,7 @@
                     shade: [0.8, '#393D49'],
                     content: ctxPath + 'conf/dict/' + data.id
                 });
-            } else if(layEvent === 'sub') {
+            } else if(layEvent == 'sub') {
                 layer.open({
                     type: 2,
                     title: data.dictName + "子项信息",

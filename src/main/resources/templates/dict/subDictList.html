@@ -60,16 +60,8 @@
 
     <table id="table-sub-dict" lay-filter="table-sub-dict-filter"></table>
 </div>
-<script type="text/html" id="convertEnabled">
-    {{#
-        if(d.enabled == true){
-            return '是';
-        }else if(d.enabled == false){
-            return '否';
-        }else{
-            return '无效';
-        }
-    }}
+<script type="text/html" id="switchOnOff">
+    <input type="checkbox" mid={{d.id}} {{d.enabled=="1"?"checked":""}} lay-skin="switch" lay-filter="switch-sub-dict-enabled" lay-text="是|否">
 </script>
 <script type="text/html" id="table-sub-dict-toolbar">
     <div class="layui-btn-container">
@@ -123,11 +115,11 @@
                 layer.confirm('您确认删除选中记录？', {icon: 3, title:'删除确认'}, function(index){
 
                     //异步请求删除数据，结果提示，刷新表格
-                    var url = ctxPath + "conf/dict/sub/" + idArr.join(",");
+                    var url = ctxPath + 'conf/dict/sub/' + idArr.join(",");
                     var params = {
                         _method: "DELETE"
                     };
-                    $.post(url,params,function (response) {
+                    $.post(url, params, function (response) {
                         if(response.code == 0){
                             layer.msg(response.message, {icon: 1});
                             refreshTable();
@@ -150,10 +142,11 @@
             ,limits: [5,10,30,50,100]
             ,cols: [[ //表头
                 {type: 'checkbox', width:60}
-                ,{field: 'id', title: '序号', width:120, sort: true, align:'center'}
+                ,{type: 'numbers', title: '序号', width: 120}
                 ,{field: 'dictCode', title: '字典代码', width:400, sort: true, align:'center'}
                 ,{field: 'dictName', title: '字典名称', align:'center'}
-                ,{field: 'enabled', title: '是否启用', width:200, align:'center', templet:'#convertEnabled'}
+                ,{field: 'sort', title: '排序', width: 120, sort: true, align:'center'}
+                ,{field: 'enabled', title: '是否启用', width:200, align:'center', templet:'#switchOnOff'}
                 ,{title: '操作', width: 150, align:'center', toolbar: '#col-sub-dict-toolbar'}
             ]]
         });
@@ -179,15 +172,15 @@
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 
-            if(layEvent === 'del'){ //删除
-                layer.confirm('您确认删除该字典：' + data.name + '?', {icon: 3, title:'删除确认'}, function(index){
+            if(layEvent == 'del'){ //删除
+                layer.confirm('您确认删除该字典：' + data.dictName + '?', {icon: 3, title:'删除确认'}, function(index){
 
                     //异步请求删除数据，结果提示，刷新表格
-                    var url = ctxPath + "conf/dict/sub/" + data.id;
+                    var url = ctxPath + 'conf/dict/sub/' + data.id;
                     var params = {
                         _method: "DELETE"
                     };
-                    $.post(url,params,function (response) {
+                    $.post(url, params, function (response) {
                         if(response.code == 0){
                             layer.msg(response.message, {icon: 1});
                             refreshTable();
@@ -198,7 +191,7 @@
 
                     layer.close(index);
                 });
-            } else if(layEvent === 'edit'){
+            } else if(layEvent == 'edit'){
                 layer.open({
                     type: 2,
                     title: "修改字典信息",
@@ -207,6 +200,20 @@
                     content: ctxPath + 'conf/dict/sub/' + data.id
                 });
             }
+        });
+
+        form.on('switch(switch-sub-dict-enabled)', function(){
+            var id = $(this).attr('mid');//为了获取开关所在行的信息，需要绑定上所在行的id
+            var url = ctxPath + 'conf/dict/sub/enabled/' + id;
+            $.post(url, function (response) {
+                if(response.code == 0){
+                    layer.msg(response.message, {icon: 1});
+                    refreshTable();
+                }else {
+                    layer.alert(response.message, {icon: 2, anim: 6});
+                }
+            });
+
         });
     });
 </script>

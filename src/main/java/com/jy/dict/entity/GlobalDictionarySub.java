@@ -20,19 +20,19 @@ public class GlobalDictionarySub extends BaseEntity {
     /**
      * 字典代码
      */
-    @Column(name = "dict_code")
+    @Column(name = "dict_code", length = 100)
     private String dictCode;
 
     /**
      * 字典名称
      */
-    @Column(name = "dict_name")
+    @Column(name = "dict_name", length = 100)
     private String dictName;
 
     /**
      * 是否启用
      */
-    @Column(name = "is_enabled")
+    @Column(name = "is_enabled", nullable = false)
     private boolean enabled = true;
 
     /**

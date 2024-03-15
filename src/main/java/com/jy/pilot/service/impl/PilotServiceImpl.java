@@ -48,7 +48,10 @@ public class PilotServiceImpl extends BaseServiceImpl<Pilot, Long> implements Pi
             params.put("like(name)", "%" + query.getName() + "%");
         }
         if(StringUtils.isNotBlank(query.getInfluence())){
-            params.put("like(influence)", "%" + query.getInfluence() + "%");
+            params.put("EQ(influence)", query.getInfluence());
+        }
+        if(StringUtils.isNotBlank(query.getDisposition())){
+            params.put("EQ(disposition)", query.getDisposition());
         }
         return params;
     }

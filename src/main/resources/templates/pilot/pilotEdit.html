@@ -30,9 +30,27 @@
         </div>
     </div>
     <div class="layui-form-item">
+        <label class="layui-form-label">性格</label>
+        <div class="layui-input-block">
+            <select th:field="*{disposition}">
+                <option value="">请选择</option>
+                <option th:each="disposition:${pilotDisposition}" th:value="${disposition.key}"><span th:text="${disposition.value}"></span></option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
         <label class="layui-form-label">所属势力</label>
         <div class="layui-input-block">
-            <input type="text" th:field="*{influence}" required="required"  lay-verify="required" placeholder="请输入所属势力" autocomplete="off" class="layui-input">
+            <select th:field="*{influence}" lay-search>
+                <option value="">请选择</option>
+                <option th:each="influence:${pilotInfluence}" th:value="${influence.key}"><span th:text="${influence.value}"></span></option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-block">
+            <input type="text" th:field="*{sort}" placeholder="排序，默认9999" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -53,8 +71,8 @@
         form.on('submit(btn-submit-filter)', function(data){
             $("#btn-submit").attr("disabled", "disabled").addClass("layui-btn-disabled");
             //异步请求提交数据
-            var url = ctxPath + "pilot";
-            data.field._method = "PUT";
+            var url = ctxPath + 'pilot';
+            data.field._method = 'PUT';
             $.post(url, data.field, function (response) {
                 if(response.code == 0){
                     //成功提示
