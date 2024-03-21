@@ -72,7 +72,7 @@ public class MechaController {
     @ResponseBody
     public Result<Object> deleteMechaByIds(@PathVariable("ids") Long... ids){
         mechaService.deleteByIds(ids);
-        return Result.success("删除员工成功");
+        return Result.success("删除机体成功");
     }
 
     @GetMapping("/{id}")

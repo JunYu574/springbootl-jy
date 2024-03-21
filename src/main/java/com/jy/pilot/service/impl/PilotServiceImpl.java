@@ -54,6 +54,9 @@ public class PilotServiceImpl extends BaseServiceImpl<Pilot, Long> implements Pi
         if(StringUtils.isNotBlank(query.getDisposition())){
             params.put("EQ(disposition)", query.getDisposition());
         }
+        if(StringUtils.isNotBlank(query.getAwakening())){
+            params.put("EQ(awakening)", "1".equals(query.getAwakening()));
+        }
         return params;
     }
 }

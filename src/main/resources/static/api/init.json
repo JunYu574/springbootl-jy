@@ -52,6 +52,107 @@
               "href": "conf/dict",
               "icon": "layui-icon layui-icon-read",
               "target": "_self"
+            },{
+              "title": "无双击坠",
+              "href": "wushuang/jz",
+              "icon": "fa fa-calendar",
+              "target": "_self"
+            }
+          ]
+        },{
+          "title": "出击",
+          "href": "",
+          "icon": "fa fa-meetup",
+          "target": "",
+          "child": [
+            {
+              "title": "主线",
+              "href": "welcome",
+              "icon": "fa fa-calendar",
+              "target": "_self"
+            },{
+              "title": "外传",
+              "href": "",
+              "icon": "fa fa-snowflake-o",
+              "target": "",
+              "child": [
+                {
+                  "title": "改造任务",
+                  "href": "",
+                  "icon": "fa fa-snowflake-o",
+                  "target": "",
+                  "child": [
+                    {
+                      "title": "瓦沙克改造",
+                      "href": "welcome",
+                      "icon": "fa fa-calendar",
+                      "target": "_self"
+                    }
+                  ]
+                },{
+                  "title": "支线任务",
+                  "href": "",
+                  "icon": "fa fa-snowflake-o",
+                  "target": "",
+                  "child": [
+                    {
+                      "title": "龙之传奇",
+                      "href": "welcome",
+                      "icon": "fa fa-calendar",
+                      "target": "_self"
+                    }
+                  ]
+                },{
+                  "title": "常驻任务",
+                  "href": "",
+                  "icon": "fa fa-snowflake-o",
+                  "target": "",
+                  "child": [
+                    {
+                      "title": "净化战争",
+                      "href": "welcome",
+                      "icon": "fa fa-calendar",
+                      "target": "_self"
+                    }
+                  ]
+                },{
+                  "title": "资源任务",
+                  "href": "",
+                  "icon": "fa fa-snowflake-o",
+                  "target": "",
+                  "child": [
+                    {
+                      "title": "BOSS的逆袭",
+                      "href": "welcome",
+                      "icon": "fa fa-calendar",
+                      "target": "_self"
+                    }
+                  ]
+                }
+              ]
+            },{
+              "title": "挑战",
+              "href": "",
+              "icon": "fa fa-snowflake-o",
+              "target": "",
+              "child": [
+                {
+                  "title": "挑战",
+                  "href": "welcome",
+                  "icon": "fa fa-calendar",
+                  "target": "_self"
+                },{
+                  "title": "觉醒之路",
+                  "href": "welcome",
+                  "icon": "fa fa-calendar",
+                  "target": "_self"
+                }
+              ]
+            },{
+              "title": "无双",
+              "href": "wushuang",
+              "icon": "fa fa-calendar",
+              "target": "_self"
             }
           ]
         },

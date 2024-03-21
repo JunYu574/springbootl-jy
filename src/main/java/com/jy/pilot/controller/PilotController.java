@@ -71,7 +71,7 @@ public class PilotController {
     @ResponseBody
     public Result<Object> deletePilotByIds(@PathVariable("ids") Long... ids){
         pilotService.deleteByIds(ids);
-        return Result.success("删除员工成功");
+        return Result.success("删除机师成功");
     }
 
     @GetMapping("/{id}")

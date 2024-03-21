@@ -18,5 +18,7 @@ public class PilotQuery extends Page {
     private String influence;
     /** 性格 */
     private String disposition;
+    /** 性格 */
+    private String awakening;
 
 }
