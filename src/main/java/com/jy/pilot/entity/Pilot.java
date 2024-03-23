@@ -27,6 +27,7 @@ public class Pilot extends BaseEntity {
 
     /**
      * 势力
+     * 字典：PILOT_INFLUENCE_TYPE
      */
     @Column(name = "influence", length = 10)
     private String influence;
@@ -45,6 +46,7 @@ public class Pilot extends BaseEntity {
 
     /**
      * 性格
+     * 字典：PILOT_DISPOSITION_TYPE
      */
     @Column(name = "disposition", length = 32)
     private String disposition;

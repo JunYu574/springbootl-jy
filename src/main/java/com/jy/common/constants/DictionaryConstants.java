@@ -74,4 +74,10 @@ public interface DictionaryConstants {
      */
     String CACHE_PARTS_LOCATION_TYPE = "PARTS_LOCATION_TYPE";
 
+//    ============================== Chapter ==============================
+
+    /**
+     * 章节所属
+     */
+    String CACHE_CHAPTER_CATEGORY_TYPE = "CHAPTER_CATEGORY_TYPE";
 }

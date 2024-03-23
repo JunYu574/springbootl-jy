@@ -27,6 +27,7 @@ public class Mecha extends BaseEntity {
 
     /**
      * 势力
+     * 字典：MECHA_INFLUENCE_TYPE
      */
     @Column(name = "influence", length = 10)
     private String influence;
@@ -36,6 +37,7 @@ public class Mecha extends BaseEntity {
 
     /**
      * 形态
+     * 字典：MECHA_SHAPE_TYPE
      */
     @Column(name = "shape", length = 10)
     private String shape;
@@ -45,6 +47,7 @@ public class Mecha extends BaseEntity {
 
     /**
      * 稀有度
+     * 字典：MECHA_RARITY_TYPE
      */
     @Column(name = "rarity", length = 10)
     private String rarity;
@@ -54,6 +57,7 @@ public class Mecha extends BaseEntity {
 
     /**
      * 品质
+     * 字典：MECHA_QUALITY_TYPE
      */
     @Column(name = "quality", length = 10)
     private String quality;
@@ -63,6 +67,7 @@ public class Mecha extends BaseEntity {
 
     /**
      * 射程
+     * 字典：MECHA_COMBAT_TYPE
      */
     @Column(name = "combat", length = 10)
     private String combat;

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>无双击坠</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/layuimini.css?v=2.0.4.2}" media="all">
+    <link rel="stylesheet" th:href="@{/css/themes/default.css}" media="all">
+    <link rel="stylesheet" th:href="@{/lib/font-awesome-4.7.0/css/font-awesome.min.css}" media="all">
+    <style>
+        .div-content{
+            background: white;
+            border-radius: 5px;
+            padding: 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="div-content">
+    <table id="table-ws-jz" lay-filter="table-ws-jz-filter"></table>
+</div>
+<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}" charset="utf-8"></script>
+<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+<script th:inline="javascript">
+
+    var ctxPath = [[@{/}]];
+
+    layui.use('table', function(){
+        var table = layui.table;
+
+        //击坠列表表格
+        table.render({
+            elem: '#table-ws-jz'
+            ,url: ctxPath + 'wushuang/jz/list' //数据接口
+            ,page: false //开启分页
+            ,cols: [[ //表头
+                {field: 'chapterNum', title: '章节', width:200, align:'center'}
+                ,{field: 'enemyNum1', title: '关卡1', width:200, align:'center'}
+                ,{field: 'enemyNum2', title: '关卡2', width:200, align:'center'}
+                ,{field: 'enemyNum3', title: '关卡3', width:200, align:'center'}
+                ,{field: 'enemyNum4', title: '关卡4', width:200, align:'center'}
+                ,{field: 'enemyNum5', title: '关卡5', width:200, align:'center'}
+                ,{field: 'enemyNum6', title: '关卡6', width:200, align:'center'}
+            ]]
+        });
+    });
+</script>
+</body>
+</html>
