@@ -55,7 +55,6 @@ public class ChapterServiceImpl extends BaseServiceImpl<Chapter, Long> implement
                 vo.setChapterNum("第" + o[0].toString() + "章");
                 if (o[1] != null) {
                     String[] enemyNum = o[1].toString().split(",");
-                    System.out.println(enemyNum.length);
                     switch (enemyNum.length) {
                         case 6:
                             vo.setEnemyNum6(enemyNum[5]);
