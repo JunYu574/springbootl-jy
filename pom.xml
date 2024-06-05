@@ -18,6 +18,7 @@
         <jquery.version>3.5.1</jquery.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <lombok.version>1.18.24</lombok.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <spring-security-core.version>6.2.1</spring-security-core.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <guava.version>33.0.0-jre</guava.version>
@@ -91,6 +92,12 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
+        </dependency>
+        <!-- fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
         </dependency>
 
         <dependency>
