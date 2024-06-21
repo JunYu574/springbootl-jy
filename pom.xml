@@ -22,6 +22,8 @@
         <spring-security-core.version>6.2.1</spring-security-core.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <guava.version>33.0.0-jre</guava.version>
+        <poi.version>4.1.2</poi.version>
+        <commonsio.version>2.11.0</commonsio.version>
     </properties>
 
     <!-- springboot管理配置 -->
@@ -128,12 +130,30 @@
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
         </dependency>
-        <!-- guava -->
+        <!-- guava不可变集合 -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
         </dependency>
+        <!-- 导出excel -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>${poi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>${poi.version}</version>
+        </dependency>
+        <!-- 文件复制 -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commonsio.version}</version>
+        </dependency>
+
 
     </dependencies>
 
