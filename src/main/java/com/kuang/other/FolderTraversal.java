@@ -15,6 +15,7 @@ public class FolderTraversal {
     public static void main(String[] args) throws IOException {
         // 1. 需求：打印文件夹内所有文件的名称(含子级)
 //        Files.walk(Paths.get("src")).forEach(System.out::println);
+//        Files.walk(Paths.get("D:\\MyFile")).forEach(System.out::println);
 
         // 2. 注意事项（1）try-with-resources （2）遍历结果包含文件夹
 //        try(Stream<Path> pathStream = Files.walk(Paths.get("src"))){
@@ -22,7 +23,7 @@ public class FolderTraversal {
 //        }
 
         // 3. 需求：在文件夹的所有java文件中寻找单词gender
-        Files.walkFileTree(Paths.get("src"), new FileVisitor<Path>() {
+        /*Files.walkFileTree(Paths.get("src"), new FileVisitor<Path>() {
             @Override
             public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
                 return FileVisitResult.CONTINUE;
@@ -49,8 +50,37 @@ public class FolderTraversal {
             public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
                 return FileVisitResult.CONTINUE;
             }
-        });
+        });*/
 
+        Files.walkFileTree(Paths.get("D:\\Program Files (x86)\\Tencent\\Tencent Files\\790277574\\Image\\Group2"), new FileVisitor<Path>() {
+            @Override
+            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                if (file.toString().endsWith(".jpg") || file.toString().endsWith(".jpeg") || file.toString().endsWith(".png")) {
+                    System.out.println(file);
+                    try {
+                        Files.copy(Paths.get(file.toString()), Paths.get("D:\\Desktop\\qqtp\\" + file.getFileName()));
+                    }catch (Exception e){
+                        System.out.println(file.getFileName()+"存在了");
+                    }
+                }
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                return FileVisitResult.CONTINUE;
+            }
+        });
     }
 
 }
