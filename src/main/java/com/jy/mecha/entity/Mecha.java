@@ -20,13 +20,13 @@ import javax.persistence.Transient;
 public class Mecha extends BaseEntity {
 
     /**
-     * 名称
+     * 机体名称
      */
     @Column(name = "name", length = 32)
     private String name;
 
     /**
-     * 势力
+     * 制造商
      * 字典：MECHA_INFLUENCE_TYPE
      */
     @Column(name = "influence", length = 10)
@@ -66,7 +66,7 @@ public class Mecha extends BaseEntity {
     private String qualityName;
 
     /**
-     * 射程
+     * 作战距离
      * 字典：MECHA_COMBAT_TYPE
      */
     @Column(name = "combat", length = 10)
@@ -75,4 +75,33 @@ public class Mecha extends BaseEntity {
     @Transient
     private String combatName;
 
+    /**
+     * 简介
+     */
+    @Column(name = "synopsis", length = 1000)
+    private String synopsis;
+
+    /**
+     * 耐久
+     */
+    @Column(name = "blood", length = 20)
+    private String blood;
+
+    /**
+     * 质量
+     */
+    @Column(name = "weight", length = 20)
+    private String weight;
+
+    /**
+     * 尺寸
+     */
+    @Column(name = "sized", length = 20)
+    private String sized;
+
+    /**
+     * 速度
+     */
+    @Column(name = "speed", length = 20)
+    private String speed;
 }

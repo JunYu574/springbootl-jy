@@ -27,7 +27,7 @@
         <div class="layui-input-block">
             <select th:field="*{influence}" lay-search>
                 <option value="">请选择</option>
-                <option th:each="influence:${mechaInfluence}" th:value="${influence.key}"><span th:text="${influence.value}"></span></option>
+                <option th:each="influence:${mechaInfluence}" th:value="${influence.key}" th:text="${influence.value}"></option>
             </select>
         </div>
     </div>
@@ -36,7 +36,7 @@
         <div class="layui-input-block">
             <select th:field="*{shape}" lay-search>
                 <option value="">请选择</option>
-                <option th:each="shape:${mechaShape}" th:value="${shape.key}"><span th:text="${shape.value}"></span></option>
+                <option th:each="shape:${mechaShape}" th:value="${shape.key}" th:text="${shape.value}"></option>
             </select>
         </div>
     </div>
@@ -45,7 +45,7 @@
         <div class="layui-input-block">
             <select th:field="*{rarity}" lay-search>
                 <option value="">请选择</option>
-                <option th:each="rarity:${mechaRarity}" th:value="${rarity.key}"><span th:text="${rarity.value}"></span></option>
+                <option th:each="rarity:${mechaRarity}" th:value="${rarity.key}" th:text="${rarity.value}"></option>
             </select>
         </div>
     </div>
@@ -54,7 +54,7 @@
         <div class="layui-input-block">
             <select th:field="*{quality}" lay-search>
                 <option value="">请选择</option>
-                <option th:each="quality:${mechaQuality}" th:value="${quality.key}"><span th:text="${quality.value}"></span></option>
+                <option th:each="quality:${mechaQuality}" th:value="${quality.key}" th:text="${quality.value}"></option>
             </select>
         </div>
     </div>
@@ -63,7 +63,7 @@
         <div class="layui-input-block">
             <select th:field="*{combat}" lay-search>
                 <option value="">请选择</option>
-                <option th:each="combat:${mechaCombat}" th:value="${combat.key}"><span th:text="${combat.value}"></span></option>
+                <option th:each="combat:${mechaCombat}" th:value="${combat.key}" th:text="${combat.value}"></option>
             </select>
         </div>
     </div>

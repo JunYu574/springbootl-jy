@@ -41,7 +41,7 @@
                     <div class="layui-input-inline" style="width: 150px;">
                         <select name="influence">
                             <option value="">请选择</option>
-                            <option th:each="influence:${mechaInfluence}" th:value="${influence.key}"><span th:text="${influence.value}"></span></option>
+                            <option th:each="influence:${mechaInfluence}" th:value="${influence.key}" th:text="${influence.value}"></option>
                         </select>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                     <div class="layui-input-inline" style="width: 150px;">
                         <select name="shape">
                             <option value="">请选择</option>
-                            <option th:each="shape:${mechaShape}" th:value="${shape.key}"><span th:text="${shape.value}"></span></option>
+                            <option th:each="shape:${mechaShape}" th:value="${shape.key}" th:text="${shape.value}"></option>
                         </select>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                     <div class="layui-input-inline" style="width: 150px;">
                         <select name="rarity">
                             <option value="">请选择</option>
-                            <option th:each="rarity:${mechaRarity}" th:value="${rarity.key}"><span th:text="${rarity.value}"></span></option>
+                            <option th:each="rarity:${mechaRarity}" th:value="${rarity.key}" th:text="${rarity.value}"></option>
                         </select>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                     <div class="layui-input-inline" style="width: 150px;">
                         <select name="quality">
                             <option value="">请选择</option>
-                            <option th:each="quality:${mechaQuality}" th:value="${quality.key}"><span th:text="${quality.value}"></span></option>
+                            <option th:each="quality:${mechaQuality}" th:value="${quality.key}" th:text="${quality.value}"></option>
                         </select>
                     </div>
                 </div>
@@ -80,8 +80,8 @@
                     <label class="layui-form-label">射程</label>
                     <div class="layui-input-inline" style="width: 150px;">
                         <select name="combat">
-                            <option value="">请选择</option>
-                            <option th:each="combat:${mechaCombat}" th:value="${combat.key}"><span th:text="${combat.value}"></span></option>
+                            <option value="" selected>请选择</option>
+                            <option th:each="combat:${mechaCombat}" th:value="${combat.key}" th:text="${combat.value}"></option>
                         </select>
                     </div>
                 </div>

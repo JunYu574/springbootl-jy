@@ -22,7 +22,7 @@ public class CacheRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        log.info(">>>>>>>>>>>>>>>服务启动执行，执行加载数据字典缓存 <<<<<<<<<<<<<");
+        log.info(">>>>>>>>>>>>>>> 服务启动执行，执行加载数据字典缓存 <<<<<<<<<<<<<");
         dictUtils.cacheDictionary();
     }
 }

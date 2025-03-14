@@ -34,7 +34,7 @@
                     <div class="layui-input-inline" style="width: 150px;">
                         <select name="dictType">
                             <option value="">请选择</option>
-                            <option th:each="dictType:${dictCatalog}" th:value="${dictType.key}"><span th:text="${dictType.value}"></span></option>
+                            <option th:each="dictType:${dictCatalog}" th:value="${dictType.key}" th:text="${dictType.value}"></option>
                         </select>
                     </div>
                 </div>

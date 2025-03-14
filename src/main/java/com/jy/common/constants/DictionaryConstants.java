@@ -48,7 +48,7 @@ public interface DictionaryConstants {
     String CACHE_MECHA_SHAPE_TYPE = "MECHA_SHAPE_TYPE";
 
     /**
-     * 机体保有量等级
+     * 机体稀有度等级
      */
     String CACHE_MECHA_RARITY_TYPE = "MECHA_RARITY_TYPE";
 

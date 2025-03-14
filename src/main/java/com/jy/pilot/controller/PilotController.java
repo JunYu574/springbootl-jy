@@ -48,6 +48,16 @@ public class PilotController {
         //机师性格
         Map<String, String> pilotDispositionMap = CacheDict.dictMap.get(DictionaryConstants.CACHE_PILOT_DISPOSITION_TYPE);
         list.stream().filter(pilot -> StringUtils.isNotBlank(pilot.getDisposition())).forEach(pilot -> pilot.setDispositionName(pilotDispositionMap.get(pilot.getDisposition())));
+        //机师可用副官
+        Map<String, String> pilotSkillMap = CacheDict.dictMap.get(DictionaryConstants.CACHE_PILOT_SKILL_TYPE);
+        list.stream().filter(pilot -> StringUtils.isNotBlank(pilot.getAvailableAide())).forEach(pilot -> {
+            String res = pilot.getAvailableAide();
+            String[] splits = res.split(",");
+            for (String s : splits){
+                res = res.replace(s, pilotSkillMap.get(s));
+            }
+            pilot.setAvailableAideName(res);
+        });
         return Result.success(list,count);
     }
 
@@ -64,6 +74,8 @@ public class PilotController {
         model.addAttribute("pilotInfluence", CacheDict.dictMap.get(DictionaryConstants.CACHE_PILOT_INFLUENCE_TYPE));
         //机师性格
         model.addAttribute("pilotDisposition", CacheDict.dictMap.get(DictionaryConstants.CACHE_PILOT_DISPOSITION_TYPE));
+        //副官
+        model.addAttribute("pilotSkill", CacheDict.dictMap.get(DictionaryConstants.CACHE_PILOT_SKILL_TYPE));
         return "pilot/pilotAdd";
     }
 

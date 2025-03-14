@@ -32,7 +32,7 @@
         <div class="layui-input-block">
             <select name="dictType" lay-verify="required">
                 <option value="">请选择</option>
-                <option th:each="dictType:${dictCatalog}" th:value="${dictType.key}"><span th:text="${dictType.value}"></span></option>
+                <option th:each="dictType:${dictCatalog}" th:value="${dictType.key}" th:text="${dictType.value}"></option>
             </select>
         </div>
     </div>
