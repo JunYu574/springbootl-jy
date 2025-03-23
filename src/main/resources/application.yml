@@ -1,6 +1,6 @@
 #端口、数据源、thymeleaf、mybatis、表单转换
 server:
-  port: 8090
+  port: 8080
 #数据库
 spring:
   datasource:

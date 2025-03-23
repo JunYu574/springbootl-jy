@@ -30,7 +30,7 @@
             <div class="layui-form-item">
 
                 <div class="layui-inline">
-                    <label class="layui-form-label">名称</label>
+                    <label class="layui-form-label">角色名</label>
                     <div class="layui-input-inline" style="width: 150px;">
                         <input type="text" name="name" autocomplete="off" class="layui-input">
                     </div>
@@ -41,7 +41,7 @@
                     <div class="layui-input-inline" style="width: 150px;">
                         <select name="influence" lay-search>
                             <option value="">请选择</option>
-                            <option th:each="influence:${pilotInfluence}" th:value="${influence.key}"><span th:text="${influence.value}"></span></option>
+                            <option th:each="influence:${pilotInfluence}" th:value="${influence.key}" th:text="${influence.value}"></option>
                         </select>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                     <div class="layui-input-inline" style="width: 150px;">
                         <select name="disposition">
                             <option value="">请选择</option>
-                            <option th:each="disposition:${pilotDisposition}" th:value="${disposition.key}"><span th:text="${disposition.value}"></span></option>
+                            <option th:each="disposition:${pilotDisposition}" th:value="${disposition.key}" th:text="${disposition.value}"></option>
                         </select>
                     </div>
                 </div>
@@ -174,13 +174,15 @@
             ,limits: [5,10,30,50,100]
             ,cols: [[ //表头
                 {type: 'checkbox', width:60}
-                ,{type: 'numbers', title: '序号', width: 120}
-                ,{field: 'name', title: '姓名', width:200, sort: true, align:'center'}
-                ,{field: 'sex', title: '性别', width:100, align:'center', templet:'#convertSex'}
-                ,{field: 'dispositionName', title: '性格', width:140, align:'center'}
-                ,{field: 'influenceName', title: '势力', align:'center'}
-                ,{field: 'sort', title: '排序', width: 120, sort: true, align:'center'}
-                ,{field: 'awakening', title: '是否觉醒', width:200, align:'center', templet:'#switchOnOff'}
+                ,{type: 'numbers', title: '序号', width: 60}
+                ,{field: 'name', title: '角色名', width:160, sort: true, align:'center'}
+                ,{field: 'influenceName', title: '势力', width:280, align:'center'}
+                ,{field: 'dramaPlane', title: '剧情专机', width:200, align:'center'}
+                ,{field: 'sex', title: '性别', width: 80, align:'center', templet:'#convertSex'}
+                ,{field: 'dispositionName', title: '性格', width: 120, align:'center'}
+                ,{field: 'availableAideName', title: '可用副官位', align:'center'}
+                ,{field: 'sort', title: '排序', width: 80, sort: true, align:'center'}
+                ,{field: 'awakening', title: '是否觉醒', width:100, align:'center', templet:'#switchOnOff'}
                 ,{title: '操作', width: 150, align:'center', toolbar: '#col-pilot-toolbar'}
             ]]
         });

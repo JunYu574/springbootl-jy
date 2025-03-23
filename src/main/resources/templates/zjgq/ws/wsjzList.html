@@ -17,6 +17,10 @@
 </head>
 <body>
 <div class="div-content">
+    <button id="btn-export" type="button" class="layui-btn layui-btn-radius layui-btn-normal">
+        <i class="layui-icon layui-icon-search"></i>
+        导出
+    </button>
     <table id="table-ws-jz" lay-filter="table-ws-jz-filter"></table>
 </div>
 <script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}" charset="utf-8"></script>
@@ -43,7 +47,14 @@
                 ,{field: 'enemyNum6', title: '关卡6', width:200, align:'center'}
             ]]
         });
+
+        //导出
+        $('#btn-export').click(function(){
+            window.open(ctxPath + 'wushuang/jz/export');
+        });
+
     });
+
 </script>
 </body>
 </html>

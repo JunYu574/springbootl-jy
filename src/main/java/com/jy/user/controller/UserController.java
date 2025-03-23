@@ -3,7 +3,6 @@ package com.jy.user.controller;
 import com.jy.common.vo.Result;
 import com.jy.user.entity.User;
 import com.jy.user.service.UserService;
-import com.wf.captcha.utils.CaptchaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,10 +29,10 @@ public class UserController {
     @PostMapping("/login")
     public Object login(User param, @RequestParam("captcha") String captcha, HttpServletRequest request, HttpSession session){
         //验证码验证
-        if (!CaptchaUtil.ver(captcha, request)) {
-            CaptchaUtil.clear(request);  // 清除session中的验证码
-            return Result.fail("验证码错误");
-        }
+//        if (!CaptchaUtil.ver(captcha, request)) {
+//            CaptchaUtil.clear(request);  // 清除session中的验证码
+//            return Result.fail("验证码错误");
+//        }
 
         User user = userService.login(param);
         if(user != null){

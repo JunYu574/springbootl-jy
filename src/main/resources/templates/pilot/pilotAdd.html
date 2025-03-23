@@ -16,9 +16,24 @@
 <body>
 <form class="layui-form" action="">
     <div class="layui-form-item">
-        <label class="layui-form-label">机师名称</label>
+        <label class="layui-form-label">角色名</label>
         <div class="layui-input-block">
             <input type="text" name="name" required lay-verify="required" placeholder="请输入机师名称" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">剧情专机</label>
+        <div class="layui-input-block">
+            <input type="text" name="dramaPlane" placeholder="请输入专机名称" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">所属势力</label>
+        <div class="layui-input-block">
+            <select name="influence" lay-search>
+                <option value="">请选择</option>
+                <option th:each="influence:${pilotInfluence}" th:value="${influence.key}" th:text="${influence.value}"></option>
+            </select>
         </div>
     </div>
     <div class="layui-form-item">
@@ -33,16 +48,7 @@
         <div class="layui-input-block">
             <select name="disposition">
                 <option value="">请选择</option>
-                <option th:each="disposition:${pilotDisposition}" th:value="${disposition.key}"><span th:text="${disposition.value}"></span></option>
-            </select>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">所属势力</label>
-        <div class="layui-input-block">
-            <select name="influence" lay-search>
-                <option value="">请选择</option>
-                <option th:each="influence:${pilotInfluence}" th:value="${influence.key}"><span th:text="${influence.value}"></span></option>
+                <option th:each="disposition:${pilotDisposition}" th:value="${disposition.key}" th:text="${disposition.value}"></option>
             </select>
         </div>
     </div>

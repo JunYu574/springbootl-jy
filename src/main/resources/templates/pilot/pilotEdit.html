@@ -17,7 +17,7 @@
 <form class="layui-form" action="" th:object="${pilot}">
     <input type="hidden" th:field="*{id}">
     <div class="layui-form-item">
-        <label class="layui-form-label">机师名称</label>
+        <label class="layui-form-label">角色名</label>
         <div class="layui-input-block">
             <input type="text" th:field="*{name}" required="required" lay-verify="required" placeholder="请输入机师名称" autocomplete="off" class="layui-input">
         </div>
@@ -34,7 +34,7 @@
         <div class="layui-input-block">
             <select th:field="*{disposition}">
                 <option value="">请选择</option>
-                <option th:each="disposition:${pilotDisposition}" th:value="${disposition.key}"><span th:text="${disposition.value}"></span></option>
+                <option th:each="disposition:${pilotDisposition}" th:value="${disposition.key}" th:text="${disposition.value}"></option>
             </select>
         </div>
     </div>
@@ -43,7 +43,7 @@
         <div class="layui-input-block">
             <select th:field="*{influence}" lay-search>
                 <option value="">请选择</option>
-                <option th:each="influence:${pilotInfluence}" th:value="${influence.key}"><span th:text="${influence.value}"></span></option>
+                <option th:each="influence:${pilotInfluence}" th:value="${influence.key}" th:text="${influence.value}"></option>
             </select>
         </div>
     </div>
